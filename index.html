@@ -4,607 +4,874 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Cabelo">
-<meta name="theme-color" content="#f8f7f4">
-<title>Rotina Capilar</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Ritual">
+<meta name="theme-color" content="#f0ede6">
+<title>Ritual</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAEM0lEQVR42u3dMW4UQRAF0D0HAQEZCTEZAbfnIM6QuIHRIoEQAuOxp6erfr2RvlN3dz2tvXZX7e1W9Hn36f2jHM+bD28vyc0DbCLsseAhm4c6EjhYUEfAhgnqCNgAQR0BGxqoY2DDAnUEakCgjoENBtAxqKGAOgY1DFDHoIYA6hjUig90DGqFhzoGtYJDHYVasYGOAa3QUMegvvowv319kIOBGmigJ4Le8eMO0BqgI1EDDXQM6F1vSACtAzoKNdBAx4De+ScjQGuBjkANNNAxoHf/UR/QeqBbowYaaKCBBhpooDuBbtkEUOFiDKBAn4YaaKCBBnoM6Ha/dgANNNBAAw000F1Bf/74BWige4K+431ugAa6NOgjmKuhLtUIC+he0C+BXBE20ECfgrkKaqCHgz4TcwXUI0DbF9AKP2BfKzDvRg300H2txLwTNdBAAw000EADDTTQQAMNNNAFMO9CDbRXaK/QQAMNNNBAAw000EADDTTQ7nK4ywG023Zu2wENNNBA61gBGmg9hQo/fl+du76Btq+ouRxA29ch5B1GggFtX1nz7YC2L6AVHmiggQYaaKDNhwYaaKDNtjNOF2igfQoW0EADDbQADTTQwzADDTTQQAMNNNAtQXfDDDTQQAM9A3RHzEADDTTQ+aC7YgYaaKCBfniscmYwD74+CjXQcfeGoc7GPPKCP9S5mMd2rEANdFyrEtR5mMf3FEKdhVmTLNRAJ3ZHT0Wdhhnohd8bZqC3/mdvEuhUzEAPRQ30oAlD6aiTMQM9DHU6ZqAHoZ6AGeghqKdg/gH6/gXoXNSTMP8CXQF15Qv5Rng1BL0bdfUOEyMIGoLeCXsa6FWop0J+EvQO1B16AKuDno75SdBXo+7S1Fp1bTA/A/SVqDt1aVdbH8gHQF8Fu9vYgQprBPgVoFej7jhHY+c64T0B9ErUXQfD7FgruCeCXgW786Sjq9YL7ELQZ8PuPrpr5ZpBvRD0WagTZtGtWDekG0CfARvovwfSjaBfAztlWijQgaBfAjtp/C3UoaCP4E6b5wx1OOj/wU4cUA71AND/wp06cR/qQaB/TyLoVXsDF+jtbU9QAx33aVFQA10GdNV9QjwQ9J9vRNP2CfJg0Il7BRloqIEGGmqggYYa6GlFhhrouAJDDXRccaEGOq6wUAMdV1SogQYaaqC9SgMNNNRAAw010IoINdC5BXQmQMcVz7kAHVc4ZwN0XNGcD9BQDzkjoIGOOiegoc4CfX+AhjrhrG4/H71oEvPqDLQALQK0CNAiQAvQDkRyQEMtUZiBFqBFgBa5CDTUEoUZaIkDDbVEYQZa4kBDLVGYgZY40FBLFGagJQ401BKFGWqJwwy0xIGGWqIwQy1xmKGWOMxQSxxmqCUOM9QShxlqicMMtsRBhloiMYMtcZDBlkjIYEskZLAlEjLgAHuAB/aFz3clUiNVrzi62wAAAABJRU5ErkJggg==">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAEM0lEQVR42u3dMW4UQRAF0D0HAQEZCTEZAbfnIM6QuIHRIoEQAuOxp6erfr2RvlN3dz2tvXZX7e1W9Hn36f2jHM+bD28vyc0DbCLsseAhm4c6EjhYUEfAhgnqCNgAQR0BGxqoY2DDAnUEakCgjoENBtAxqKGAOgY1DFDHoIYA6hjUig90DGqFhzoGtYJDHYVasYGOAa3QUMegvvowv319kIOBGmigJ4Le8eMO0BqgI1EDDXQM6F1vSACtAzoKNdBAx4De+ScjQGuBjkANNNAxoHf/UR/QeqBbowYaaKCBBhpooDuBbtkEUOFiDKBAn4YaaKCBBnoM6Ha/dgANNNBAAw000F1Bf/74BWige4K+431ugAa6NOgjmKuhLtUIC+he0C+BXBE20ECfgrkKaqCHgz4TcwXUI0DbF9AKP2BfKzDvRg300H2txLwTNdBAAw000EADDTTQQAMNNNAFMO9CDbRXaK/QQAMNNNBAAw000EADDTTQ7nK4ywG023Zu2wENNNBA61gBGmg9hQo/fl+du76Btq+ouRxA29ch5B1GggFtX1nz7YC2L6AVHmiggQYaaKDNhwYaaKDNtjNOF2igfQoW0EADDbQADTTQwzADDTTQQAMNNNAtQXfDDDTQQAM9A3RHzEADDTTQ+aC7YgYaaKCBfniscmYwD74+CjXQcfeGoc7GPPKCP9S5mMd2rEANdFyrEtR5mMf3FEKdhVmTLNRAJ3ZHT0Wdhhnohd8bZqC3/mdvEuhUzEAPRQ30oAlD6aiTMQM9DHU6ZqAHoZ6AGeghqKdg/gH6/gXoXNSTMP8CXQF15Qv5Rng1BL0bdfUOEyMIGoLeCXsa6FWop0J+EvQO1B16AKuDno75SdBXo+7S1Fp1bTA/A/SVqDt1aVdbH8gHQF8Fu9vYgQprBPgVoFej7jhHY+c64T0B9ErUXQfD7FgruCeCXgW786Sjq9YL7ELQZ8PuPrpr5ZpBvRD0WagTZtGtWDekG0CfARvovwfSjaBfAztlWijQgaBfAjtp/C3UoaCP4E6b5wx1OOj/wU4cUA71AND/wp06cR/qQaB/TyLoVXsDF+jtbU9QAx33aVFQA10GdNV9QjwQ9J9vRNP2CfJg0Il7BRloqIEGGmqggYYa6GlFhhrouAJDDXRccaEGOq6wUAMdV1SogQYaaqC9SgMNNNRAAw010IoINdC5BXQmQMcVz7kAHVc4ZwN0XNGcD9BQDzkjoIGOOiegoc4CfX+AhjrhrG4/H71oEvPqDLQALQK0CNAiQAvQDkRyQEMtUZiBFqBFgBa5CDTUEoUZaIkDDbVEYQZa4kBDLVGYgZY40FBLFGagJQ401BKFGWqJwwy0xIGGWqIwQy1xmKGWOMxQSxxmqCUOM9QShxlqicMMtsRBhloiMYMtcZDBlkjIYEskZLAlEjLgAHuAB/aFz3clUiNVrzi62wAAAABJRU5ErkJggg==">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html, body, #root { height: 100%; }
-  body { background: #f8f7f4; font-family: system-ui, -apple-system, sans-serif; overscroll-behavior-y: none; }
-  input[type=date] { -webkit-appearance: none; appearance: none; }
-  ::-webkit-scrollbar { display: none; }
-  @keyframes breathe { 0%,100%{transform:scale(1);opacity:.75} 50%{transform:scale(1.08) translateY(-1.5%);opacity:1} }
-  @keyframes drift   { 0%{transform:translate(-4%,0) rotate(0deg)} 50%{transform:translate(4%,-3%) rotate(4deg)} 100%{transform:translate(-4%,0) rotate(0deg)} }
-  @keyframes rise    { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
-  @keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{height:100%;-webkit-text-size-adjust:100%}
+body{height:100%;background:#f0ede6;font-family:'Inter',system-ui,-apple-system,sans-serif;overscroll-behavior:none;-webkit-font-smoothing:antialiased;color:#1c1917}
+#root{min-height:100dvh}
+input,button,select,textarea{font-family:'Inter',system-ui,-apple-system,sans-serif;-webkit-appearance:none;appearance:none}
+input[type=date]{-webkit-appearance:none;appearance:none}
+input[type=number]{-moz-appearance:textfield}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+::-webkit-scrollbar{display:none}
+
+/* safe area helpers */
+:root{
+  --sat: env(safe-area-inset-top, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --px: 28px;
+  --bg: #f0ede6;
+  --bg2: #e8e4dc;
+  --ink: #1c1917;
+  --ink2: #57534e;
+  --ink3: #a8a29e;
+  --wash-base: #1a2e1e;
+  --wash-acc: #4a7c59;
+  --wash-dot: #86efac;
+  --rest-base: #1e1b3a;
+  --rest-acc: #4338ca;
+  --rest-dot: #a5b4fc;
+  --color-base: #2c1010;
+  --color-acc: #9f3a3a;
+  --color-dot: #fca5a5;
+  --border: #ddd8cf;
+  --border2: #c8c2b7;
+}
+
+@keyframes breathe{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.12) translateY(-2%);opacity:1}}
+@keyframes drift{0%{transform:translate(-6%,0)rotate(0deg)}50%{transform:translate(6%,-5%)rotate(6deg)}100%{transform:translate(-6%,0)rotate(0deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
 <div id="root"></div>
-
 <script type="text/babel">
-const { useState, useEffect } = React;
+const {useState,useEffect,useRef,useCallback}=React;
 
-/* ── tokens ─────────────────────────────────────────── */
-const FD = "'Georgia', ui-serif, serif";
-const FS = "system-ui, -apple-system, sans-serif";
-const LAYERS = {
-  wash:  { base:"oklch(0.30 0.085 170)", blobs:["oklch(0.46 0.12 176/.6)","oklch(0.58 0.10 190/.4)"] },
-  rest:  { base:"oklch(0.88 0.055 82)",  blobs:["oklch(0.80 0.10 76/.6)","oklch(0.93 0.05 92/.7)"] },
-  color: { base:"oklch(0.29 0.13 20)",   blobs:["oklch(0.42 0.17 16/.6)","oklch(0.34 0.10 350/.5)"] },
-};
-const STROKE = { wash:"#2d6a4f", rest:"#b45309", color:"#9b3a3a" };
-const DOT    = { wash:"#3a9e7a", rest:"#c4a44a", color:"#9b3a3a" };
+/* ── TYPOGRAPHY ─────────────────────────────── */
+const FP="'Playfair Display',Georgia,serif"; // display / headings
+const FI="'Inter',system-ui,sans-serif";     // body
 
-/* ── schedule ────────────────────────────────────────── */
-const toKey   = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-const fromKey = k => { const [y,m,d]=k.split("-").map(Number); return new Date(y,(m??1)-1,d??1); };
-const todayKey= () => toKey(new Date());
-const addDays = (k,n) => { const d=fromKey(k); d.setDate(d.getDate()+n); return toKey(d); };
-const diffDays= (a,b) => Math.round((fromKey(b)-fromKey(a))/86400000);
-
-function getDayType(dateKey, anchor, profile) {
-  if (profile?.hasColor && profile.lastColorDate && profile.colorFreq) {
-    const freq = Math.max(7, profile.colorFreq);
-    const diff = diffDays(profile.lastColorDate, dateKey);
-    if (diff > 0 && diff % freq === 0) return "color";
-  }
-  if (!anchor) return "wash";
-  const diff = diffDays(anchor, dateKey);
-  return (((diff % 2) + 2) % 2) === 0 ? "wash" : "rest";
-}
-function isPreColorDay(dateKey, anchor, profile) {
-  return getDayType(addDays(dateKey,1), anchor, profile) === "color";
-}
-function getFocus(dateKey, anchor) {
-  if (!anchor) return "reconstrucao";
-  const diff = diffDays(anchor, dateKey);
-  return Math.floor((((diff % 14)+14)%14)/7) === 0 ? "reconstrucao" : "hidratacao";
-}
-
-const DAY_LABEL = { wash:"Hoje é lavagem", rest:"Hoje é descanso", color:"Hoje é coloração" };
-const DAY_SUB   = {
-  wash:  "Ciclo completo de limpeza e tratamento.",
-  rest:  "Sem lavagem. Cuidado leve e proteção.",
-  color: "Dia de coloração — cabelo vai sujo. Sem lavagem.",
-};
-const FOCUS_INSIGHT = {
-  reconstrucao: "Semana de reconstrução — máscara de proteína para devolver força aos fios porosos e coloridos.",
-  hidratacao:   "Semana de hidratação — umectação e emolientes, sem sobrecarga proteica.",
+/* ── THEME PER DAY TYPE ─────────────────────── */
+const T={
+  wash:{
+    bg:"#1a2e1e",
+    blob1:"rgba(42,80,52,.8)",
+    blob2:"rgba(28,55,36,.6)",
+    fg:"#f0ede6",
+    acc:"#86efac",
+    stroke:"#4a7c59",
+    dot:"#86efac",
+    label:"Lavagem",
+    sub:"Ciclo completo de limpeza e tratamento.",
+  },
+  recovery:{
+    bg:"#1e1b3a",
+    blob1:"rgba(55,48,120,.75)",
+    blob2:"rgba(38,35,90,.6)",
+    fg:"#f0ede6",
+    acc:"#a5b4fc",
+    stroke:"#4338ca",
+    dot:"#a5b4fc",
+    label:"Manutenção",
+    sub:"Sem lavagem. Cuidado leve e proteção dos fios.",
+  },
+  color:{
+    bg:"#2c1010",
+    blob1:"rgba(120,40,40,.75)",
+    blob2:"rgba(80,25,25,.6)",
+    fg:"#f0ede6",
+    acc:"#fca5a5",
+    stroke:"#9f3a3a",
+    dot:"#fca5a5",
+    label:"Coloração",
+    sub:"Cabelo vai sujo. Oleosidade natural protege o couro.",
+  },
 };
 
-/* ── steps ───────────────────────────────────────────── */
-const PHASE_LABEL = { banho:"No banho", "pos-banho":"Pós-banho", noite:"Ritual da noite" };
+const CAT_META={
+  Shampoo:   {emoji:"○",bg:"#eef5ee",tx:"#1a3a1e",br:"#c4dfc7"},
+  Máscara:   {emoji:"○",bg:"#eeeef8",tx:"#1e1a3a",br:"#c4c4e8"},
+  Condicionador:{emoji:"○",bg:"#f5f2e8",tx:"#3a2e10",br:"#dfd4a8"},
+  "Leave-in":{emoji:"○",bg:"#f5eef5",tx:"#3a1a3a",br:"#d4b8d4"},
+  Óleo:      {emoji:"○",bg:"#f8f3ec",tx:"#3a2010",br:"#e0c8a8"},
+  Sérum:     {emoji:"○",bg:"#eef5f2",tx:"#1a3a2e",br:"#b8d8cc"},
+  Outro:     {emoji:"○",bg:"#f2f2f2",tx:"#2a2a2a",br:"#d0d0d0"},
+};
+const CATS=Object.keys(CAT_META);
 
-function buildSteps(type, focus, products=[]) {
-  const RECO = [
-    { id:"w1", title:"Shampoo Kérastase Gloss Absolu",    detail:"Molhe bem antes. Aplique só no couro cabeludo.", phase:"banho" },
-    { id:"w2", title:"Elseve Bond Repair (bond builder)", detail:"Pré-shampoo de reconstrução — aplica, aguarda e lava.", phase:"banho", minutes:5 },
-    { id:"w3", title:"Máscara Redken Acidic Bonding",     detail:"Mecha a mecha nos comprimentos. Não aplica na raiz.", phase:"banho", minutes:10 },
-    { id:"w4", title:"Pentear com produto no fio",        detail:"Pente de dente largo — nunca pente o fio seco.", phase:"banho" },
-    { id:"w5", title:"Enxague frio final",                detail:"Fecha cutícula mecanicamente.", phase:"banho", minutes:1 },
-    { id:"w6", title:"Protetor térmico nos fios úmidos",  detail:"Antes de qualquer finalização, mesmo sem usar calor.", phase:"pos-banho" },
-    { id:"w7", title:"Leave-in + óleo leve",              detail:"1 pump leave-in + 2–3 gotas óleo leve — do meio às pontas.", phase:"pos-banho" },
-    { id:"w8", title:"Óleo pesado (opcional)",            detail:"Só se o fio estiver muito ressecado — apenas nas pontas.", phase:"pos-banho" },
+/* ── SCHEDULE ───────────────────────────────── */
+const toKey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const fromKey=k=>{const[y,m,d]=k.split("-").map(Number);return new Date(y,(m??1)-1,d??1)};
+const todayKey=()=>toKey(new Date());
+const addDays=(k,n)=>{const d=fromKey(k);d.setDate(d.getDate()+n);return toKey(d)};
+const diffDays=(a,b)=>Math.round((fromKey(b)-fromKey(a))/86400000);
+
+function getDayType(key,anchor,colorDates=[]){
+  if(colorDates.includes(key))return"color";
+  if(!anchor)return"wash";
+  const diff=diffDays(anchor,key);
+  return(((diff%2)+2)%2)===0?"wash":"recovery";
+}
+function isPreColor(key,anchor,colorDates){
+  return getDayType(addDays(key,1),anchor,colorDates)==="color";
+}
+function getFocus(key,anchor){
+  if(!anchor)return"reco";
+  const diff=diffDays(anchor,key);
+  return Math.floor((((diff%14)+14)%14)/7)===0?"reco":"hidro";
+}
+
+/* ── STEPS ──────────────────────────────────── */
+const NIGHT={id:"n1",title:"Sérum noturno",detail:"Aplique nos fios secos antes de dormir, sem enxaguar.",phase:"noite"};
+
+function buildSteps(type,focus,sel={}){
+  if(type==="recovery") return[
+    {id:"r1",title:"Óleo nas pontas",detail:"Se os fios estiverem ressecados ao longo do dia.",phase:"pos",slot:"oleo"},
+    {id:"r2",title:"Leave-in leve (opcional)",detail:"Só se houver frizz ou ressecamento excessivo.",phase:"pos",slot:"leavein"},
+    NIGHT,
   ];
-  const HIDRO = [
-    { id:"w1", title:"Shampoo Kérastase Gloss Absolu",    detail:"Molhe bem antes. Aplique só no couro cabeludo.", phase:"banho" },
-    { id:"w2", title:"Acidificante Kérastase",            detail:"Após shampoo — quelante e fecha cutícula.", phase:"banho", minutes:3 },
-    { id:"w3", title:"Máscara Joico — hidratação",        detail:"Fio rígido ou sem elasticidade pede hidratação.", phase:"banho", minutes:5 },
-    { id:"w4", title:"Pentear com produto no fio",        detail:"Pente de dente largo — nunca pente o fio seco.", phase:"banho" },
-    { id:"w5", title:"Enxague frio final",                detail:"Fecha cutícula mecanicamente.", phase:"banho", minutes:1 },
-    { id:"w6", title:"Protetor térmico nos fios úmidos",  detail:"Antes de qualquer finalização, mesmo sem usar calor.", phase:"pos-banho" },
-    { id:"w7", title:"Leave-in + óleo leve",              detail:"1 pump leave-in + 2–3 gotas óleo leve — do meio às pontas.", phase:"pos-banho" },
-    { id:"w8", title:"Óleo pesado (opcional)",            detail:"Só se o fio estiver muito ressecado — apenas nas pontas.", phase:"pos-banho" },
+  if(type==="color") return[
+    {id:"c1",title:"Cabelo vai sujo",detail:"A oleosidade protege o couro durante o processo. Não lave hoje.",phase:"info"},
+    {id:"c2",title:"Evite proteína nas 48h",detail:"Pós-química, o fio precisa de hidratação — não de reconstrução.",phase:"noite"},
+    NIGHT,
   ];
-  const REST = [
-    { id:"r1", title:"Óleo leve (Pantene) nas pontas",    detail:"Aplica se o fio estiver ressecado ao longo do dia.", phase:"pos-banho" },
-    { id:"r2", title:"Leave-in sem lavagem (opcional)",   detail:"Só se estiver com frizz ou muito seco.", phase:"pos-banho" },
+  const reco=focus==="reco";
+  return[
+    {id:"w1",title:"Shampoo",detail:"Molhe bem antes. Aplique só no couro cabeludo.",phase:"banho",slot:"shampoo"},
+    reco
+      ?{id:"w2",title:"Bond builder",detail:"Aplica nos comprimentos secos, aguarda e lava.",phase:"banho",minutes:5}
+      :{id:"w2",title:"Acidificante",detail:"Após shampoo — quelante, fecha cutícula.",phase:"banho",minutes:3,slot:"acidificante"},
+    reco
+      ?{id:"w3",title:"Máscara de reconstrução",detail:"Mecha a mecha nos comprimentos, sem raiz.",phase:"banho",minutes:10,slot:"mascara"}
+      :{id:"w3",title:"Máscara de hidratação",detail:"Semana de hidratação — emolientes e umectantes.",phase:"banho",minutes:5,slot:"mascara"},
+    {id:"w4",title:"Pentear com produto",detail:"Pente de dente largo, nunca pente o fio seco.",phase:"banho"},
+    {id:"w5",title:"Enxague frio final",detail:"Fecha a cutícula mecanicamente.",phase:"banho",minutes:1},
+    {id:"w6",title:"Protetor térmico",detail:"Nos fios úmidos antes de qualquer finalização.",phase:"pos",slot:"protetor"},
+    {id:"w7",title:"Leave-in + óleo leve",detail:"1 pump leave-in + 2–3 gotas de óleo — do meio às pontas.",phase:"pos",slot:"leavein"},
+    {id:"w8",title:"Óleo pesado (opcional)",detail:"Apenas se o fio estiver muito ressecado — pontas.",phase:"pos",slot:"oleo_pesado"},
+    NIGHT,
   ];
-  const COLOR = [
-    { id:"c1", title:"Cabelo vai sujo",                   detail:"A oleosidade natural protege o couro durante o processo. Não lave.", phase:"banho" },
-    { id:"c2", title:"Fronha de seda esta noite",         detail:"Menos atrito = menos desbotamento na primeira noite.", phase:"noite" },
-  ];
-  const NIGHT = { id:"n1", title:"Sérum Redken Acidic Bonding Night & Day", detail:"Fios secos antes de dormir, sem enxaguar.", phase:"noite" };
-  const base  = type==="color" ? COLOR : type==="rest" ? REST : focus==="reconstrucao" ? RECO : HIDRO;
-  const extras = products.map(p=>({ id:`p-${p.id}`, title:p.name, detail:p.note||p.frequency||"", phase:p.phase }));
-  return [...base, ...extras, NIGHT];
 }
 
-/* ── default profile ─────────────────────────────────── */
-const DEFAULT_PROFILE = {
-  hasColor: true,
-  lastColorDate: (() => { const d=new Date(); d.setDate(d.getDate()-3); return toKey(d); })(),
-  colorFreq: 28,
+const SLOT_CAT={
+  shampoo:"Shampoo",mascara:"Máscara",acidificante:"Condicionador",
+  protetor:"Sérum",leavein:"Leave-in",oleo:"Óleo",oleo_pesado:"Óleo",
 };
-const DEFAULT_ANCHOR = addDays(todayKey(), -1);
 
-/* ── storage ─────────────────────────────────────────── */
-const STORE_KEY = "rotina-capilar-v4";
-const EMPTY = { profile:DEFAULT_PROFILE, anchor:DEFAULT_ANCHOR, products:[], progress:{}, productHistory:[] };
-const loadState = () => {
-  try {
-    const raw = localStorage.getItem(STORE_KEY);
-    if (!raw) return EMPTY;
-    const p = JSON.parse(raw);
-    return { ...EMPTY, ...p, profile:{ ...DEFAULT_PROFILE, ...(p.profile||{}) } };
-  } catch { return EMPTY; }
+/* ── STORAGE ────────────────────────────────── */
+const SK="ritual-v2";
+const DEF={profile:null,anchor:null,colorDates:[],products:[],sel:{},skipped:[],progress:{}};
+const load=()=>{try{const r=localStorage.getItem(SK);return r?{...DEF,...JSON.parse(r)}:DEF}catch{return DEF}};
+const save=s=>{try{localStorage.setItem(SK,JSON.stringify(s))}catch{}};
+
+/* ══ COMPONENTS ═══════════════════════════════════════════ */
+
+/* shared input style */
+const INP={
+  width:"100%",padding:"14px 16px",borderRadius:12,
+  border:"1px solid var(--border)",background:"#faf8f4",
+  color:"var(--ink)",fontSize:15,outline:"none",
+  fontFamily:FI,
 };
-const saveState = s => { try { localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch {} };
 
-/* ── Claude API ──────────────────────────────────────── */
-async function analyzeProduct(query, profile) {
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({
-      model:"claude-sonnet-4-6", max_tokens:1000,
-      messages:[{ role:"user", content:`Especialista em cosmética capilar. Analise o produto e responda APENAS em JSON válido sem markdown.
-
-Produto: "${query}"
-Perfil: cabelo com coloração mensal (${profile?.colorFreq||28} dias), porosidade genética alta, vegetariana.
-
-JSON exato:
-{"name":"nome comercial","brand":"marca","category":"categoria","summary":"o que é em 1 frase","verdict":"adequado|com ressalva|não recomendado","verdictReason":"motivo em 1-2 frases","phase":"banho|pos-banho|noite","frequency":"frequência de uso","note":"instrução de uso em 1 frase"}` }]
-    })
-  });
-  const data = await res.json();
-  const text = data.content?.find(b=>b.type==="text")?.text||"{}";
-  try { return JSON.parse(text.replace(/```json|```/g,"")); } catch { return null; }
-}
-
-/* ══ COMPONENTS ══════════════════════════════════════════ */
-
-function HeroTexture({ type }) {
-  const l = LAYERS[type];
-  return (
-    <div style={{position:"absolute",inset:0,overflow:"hidden",backgroundColor:l.base}}>
-      <div style={{position:"absolute",left:"-20%",top:"-15%",height:"70%",width:"90%",borderRadius:"50%",filter:"blur(80px)",backgroundColor:l.blobs[0],animation:"breathe 9s ease-in-out infinite"}}/>
-      <div style={{position:"absolute",right:"-25%",bottom:"-20%",height:"75%",width:"95%",borderRadius:"50%",filter:"blur(80px)",backgroundColor:l.blobs[1],animation:"drift 22s ease-in-out infinite"}}/>
-      <div style={{position:"absolute",inset:0,opacity:.12,mixBlendMode:"overlay",backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")`}}/>
+/* ── Hero background ────────────────────────────────────── */
+function Hero({type,children}){
+  const th=T[type]||T.wash;
+  return(
+    <div style={{position:"relative",overflow:"hidden",backgroundColor:th.bg}}>
+      <div style={{position:"absolute",left:"-30%",top:"-20%",width:"100%",height:"80%",borderRadius:"50%",filter:"blur(100px)",backgroundColor:th.blob1,animation:"breathe 12s ease-in-out infinite"}}/>
+      <div style={{position:"absolute",right:"-35%",bottom:"-30%",width:"110%",height:"90%",borderRadius:"50%",filter:"blur(100px)",backgroundColor:th.blob2,animation:"drift 28s ease-in-out infinite"}}/>
+      <div style={{position:"absolute",inset:0,opacity:.08,mixBlendMode:"overlay",backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")`}}/>
+      <div style={{position:"relative"}}>{children}</div>
     </div>
   );
 }
 
-function ProgressRing({ value, total, size=52, stroke=3 }) {
-  const r=(size-stroke)/2,c=2*Math.PI*r,pct=total>0?Math.min(1,value/total):0;
-  return (
-    <div style={{position:"relative",width:size,height:size}}>
+/* ── Progress ring ──────────────────────────────────────── */
+function Ring({value,total,size=44,color="rgba(255,255,255,.9)"}){
+  const s=2.5,r=(size-s)/2,c=2*Math.PI*r,p=total>0?Math.min(1,value/total):0;
+  return(
+    <div style={{position:"relative",width:size,height:size,flexShrink:0}}>
       <svg width={size} height={size} style={{transform:"rotate(-90deg)"}}>
-        <circle cx={size/2} cy={size/2} r={r} fill="none" strokeWidth={stroke} stroke="rgba(255,255,255,0.25)"/>
-        <circle cx={size/2} cy={size/2} r={r} fill="none" strokeWidth={stroke} strokeLinecap="round"
-          stroke="white" strokeDasharray={c} strokeDashoffset={c*(1-pct)} style={{transition:"stroke-dashoffset .7s ease-out"}}/>
+        <circle cx={size/2} cy={size/2} r={r} fill="none" strokeWidth={s} stroke={`${color}28`}/>
+        <circle cx={size/2} cy={size/2} r={r} fill="none" strokeWidth={s} strokeLinecap="round"
+          stroke={color} strokeDasharray={c} strokeDashoffset={c*(1-p)} style={{transition:"stroke-dashoffset .6s ease-out"}}/>
       </svg>
-      <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,color:"white",fontVariantNumeric:"tabular-nums"}}>{value}/{total}</div>
+      <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,color,fontVariantNumeric:"tabular-nums",fontWeight:500,letterSpacing:".02em"}}>{value}/{total}</div>
     </div>
   );
 }
 
-function TimerSheet({ open, title, minutes, type, onClose }) {
-  const total=minutes*60;
-  const [left,setLeft]=useState(total);
-  const [running,setRunning]=useState(false);
-  const [done,setDone]=useState(false);
-  useEffect(()=>{ if(!open) return; setLeft(total); setRunning(false); setDone(false); },[open,total]);
+/* ── Timer bottom sheet ─────────────────────────────────── */
+function TimerSheet({open,title,minutes,type,onClose}){
+  const tot=minutes*60;
+  const[left,setLeft]=useState(tot);
+  const[run,setRun]=useState(false);
+  const[done,setDone]=useState(false);
+  useEffect(()=>{if(!open)return;setLeft(tot);setRun(false);setDone(false)},[open,tot]);
   useEffect(()=>{
-    if(!open||!running) return;
+    if(!open||!run)return;
     const id=setInterval(()=>setLeft(v=>{
-      if(v<=1){ clearInterval(id); setRunning(false); setDone(true); navigator.vibrate?.([120,60,200]); return 0; }
+      if(v<=1){clearInterval(id);setRun(false);setDone(true);navigator.vibrate?.([150,80,250]);return 0}
       return v-1;
     }),1000);
-    return ()=>clearInterval(id);
-  },[open,running]);
-  if(!open) return null;
-  const sz=200,r=(sz-8)/2,circ=2*Math.PI*r,pct=total>0?left/total:0;
+    return()=>clearInterval(id);
+  },[open,run]);
+  if(!open)return null;
+  const sz=168,r=(sz-7)/2,circ=2*Math.PI*r,pct=tot>0?left/tot:0;
   const mm=Math.floor(left/60),ss=String(left%60).padStart(2,"0");
-  const stroke=STROKE[type]||"#2d6a4f";
-  return (
-    <div style={{position:"fixed",inset:0,zIndex:50,display:"flex",alignItems:"flex-end"}}>
-      <div onClick={onClose} style={{position:"absolute",inset:0,background:"rgba(26,25,23,.5)",backdropFilter:"blur(2px)"}}/>
-      <div style={{position:"relative",width:"100%",borderRadius:"28px 28px 0 0",background:"#faf9f6",borderTop:"1px solid #e2dfd8",padding:"16px 24px 44px",animation:"rise .35s cubic-bezier(.22,1,.36,1) both"}}>
-        <div style={{width:40,height:4,borderRadius:2,background:"#e2dfd8",margin:"0 auto 20px"}}/>
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:20}}>
+  const th=T[type]||T.wash;
+  return(
+    <div style={{position:"fixed",inset:0,zIndex:70,display:"flex",alignItems:"flex-end"}}>
+      <div onClick={onClose} style={{position:"absolute",inset:0,background:"rgba(28,25,20,.55)",backdropFilter:"blur(6px)"}}/>
+      <div style={{position:"relative",width:"100%",borderRadius:"22px 22px 0 0",background:"var(--bg)",borderTop:"1px solid var(--border)",padding:`18px var(--px) calc(var(--px) + var(--sab))`,animation:"rise .3s cubic-bezier(.22,1,.36,1) both"}}>
+        <div style={{width:32,height:3,borderRadius:2,background:"var(--border2)",margin:"0 auto 22px"}}/>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:22}}>
           <div>
-            <div style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",marginBottom:4}}>Temporizador</div>
-            <div style={{fontSize:20,fontFamily:FD,lineHeight:1.1}}>{title}</div>
+            <div style={{fontSize:10,letterSpacing:".22em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:5,fontWeight:500}}>Temporizador</div>
+            <div style={{fontSize:19,fontFamily:FP,lineHeight:1.1,color:"var(--ink)"}}>{title}</div>
           </div>
-          <button onClick={onClose} style={{border:"1px solid #e2dfd8",borderRadius:"50%",width:34,height:34,display:"flex",alignItems:"center",justifyContent:"center",background:"none",cursor:"pointer",color:"#8a8780",fontSize:16}}>×</button>
+          <button onClick={onClose} style={{border:"1px solid var(--border)",borderRadius:"50%",width:32,height:32,display:"flex",alignItems:"center",justifyContent:"center",background:"none",cursor:"pointer",color:"var(--ink3)",fontSize:20,lineHeight:1}}>×</button>
         </div>
-        <div style={{position:"relative",width:sz,height:sz,margin:"0 auto 24px"}}>
+        <div style={{position:"relative",width:sz,height:sz,margin:"0 auto 26px"}}>
           <svg width={sz} height={sz} style={{transform:"rotate(-90deg)"}}>
-            <circle cx={sz/2} cy={sz/2} r={r} fill="none" strokeWidth={6} stroke="#e2dfd8"/>
+            <circle cx={sz/2} cy={sz/2} r={r} fill="none" strokeWidth={6} stroke="var(--bg2)"/>
             <circle cx={sz/2} cy={sz/2} r={r} fill="none" strokeWidth={6} strokeLinecap="round"
-              stroke={stroke} strokeDasharray={circ} strokeDashoffset={circ*(1-pct)} style={{transition:"stroke-dashoffset 1s linear"}}/>
+              stroke={th.stroke} strokeDasharray={circ} strokeDashoffset={circ*(1-pct)} style={{transition:"stroke-dashoffset 1s linear"}}/>
           </svg>
           <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
-            <span style={{fontFamily:FD,fontSize:48,letterSpacing:"-.03em",fontVariantNumeric:"tabular-nums"}}>{mm}:{ss}</span>
-            <span style={{fontSize:12,color:"#8a8780",marginTop:4}}>{done?"Concluído":running?"em andamento":"pausado"}</span>
+            <span style={{fontFamily:FP,fontSize:46,letterSpacing:"-.04em",fontVariantNumeric:"tabular-nums",color:"var(--ink)"}}>{mm}:{ss}</span>
+            <span style={{fontSize:11,color:"var(--ink3)",marginTop:3,letterSpacing:".04em"}}>{done?"concluído":run?"em andamento":"pausado"}</span>
           </div>
         </div>
         <div style={{display:"flex",gap:10}}>
-          <button onClick={()=>done?onClose():setRunning(r=>!r)}
-            style={{flex:1,padding:"13px 0",borderRadius:40,border:"none",cursor:"pointer",fontSize:14,background:stroke,color:"white"}}>
-            {done?"Pronto":running?"⏸ Pausar":"▶ Iniciar"}
+          <button onClick={()=>done?onClose():setRun(r=>!r)}
+            style={{flex:1,padding:"15px 0",borderRadius:40,border:"none",cursor:"pointer",fontSize:14,background:"var(--ink)",color:"var(--bg)",fontWeight:500,letterSpacing:".02em"}}>
+            {done?"Pronto":run?"Pausar":"Iniciar"}
           </button>
-          <button onClick={onClose} style={{padding:"13px 18px",borderRadius:40,border:"1px solid #e2dfd8",background:"none",cursor:"pointer",fontSize:14,color:"#8a8780"}}>Fechar</button>
+          <button onClick={onClose} style={{padding:"15px 20px",borderRadius:40,border:"1px solid var(--border)",background:"none",cursor:"pointer",fontSize:14,color:"var(--ink2)"}}>Fechar</button>
         </div>
       </div>
     </div>
   );
 }
 
-/* ── Settings ────────────────────────────────────────── */
-function Settings({ state, onSave, onBack }) {
-  const p = state.profile||DEFAULT_PROFILE;
-  const [hasColor,setHasColor]=useState(p.hasColor);
-  const [lastColor,setLastColor]=useState(p.lastColorDate||todayKey());
-  const [freq,setFreq]=useState(p.colorFreq||28);
-  const [anchor,setAnchor]=useState(state.anchor||DEFAULT_ANCHOR);
-  const [products,setProducts]=useState(state.products||[]);
+/* ── QUIZ ───────────────────────────────────────────────── */
+const QS=[
+  {id:"hairType",q:"Qual é o seu tipo de cabelo?",sub:"Escala de curvatura 1A a 4C.",multi:false,
+    opts:[{v:"liso",l:"Liso",h:"1A – 1C"},{v:"ondulado",l:"Ondulado",h:"2A – 2C"},{v:"cacheado",l:"Cacheado",h:"3A – 3C"},{v:"crespo",l:"Crespo",h:"4A – 4C"}]},
+  {id:"porosity",q:"Qual é a porosidade?",sub:"Define a intensidade e frequência do tratamento.",multi:false,
+    opts:[{v:"baixa",l:"Baixa",h:"Demora para molhar e secar"},{v:"media",l:"Média",h:"Absorve e seca em tempo normal"},{v:"alta",l:"Alta",h:"Absorve rápido, perde hidratação logo"}]},
+  {id:"chemistry",q:"Você tem alguma química?",sub:"Selecione todas que se aplicam.",multi:true,
+    opts:[{v:"coloracao",l:"Coloração"},{v:"alisamento",l:"Alisamento"},{v:"relaxamento",l:"Relaxamento"},{v:"henna",l:"Henna"},{v:"nenhuma",l:"Nenhuma"}]},
+  {id:"goal",q:"Qual é o seu objetivo principal?",sub:"",multi:false,
+    opts:[{v:"reconstrucao",l:"Reconstrução",h:"Fios com dano, quebra ou química"},{v:"hidratacao",l:"Hidratação",h:"Fios secos ou sem maciez"},{v:"crescimento",l:"Crescimento",h:"Estimular e preservar o comprimento"},{v:"frizz",l:"Anti-frizz",h:"Controlar volume e disciplinar"}]},
+];
 
-  const Pill=({active,onClick,children})=>(
-    <button onClick={onClick} style={{padding:"9px 18px",borderRadius:40,border:`1px solid ${active?"#2d6a4f":"#e2dfd8"}`,background:active?"#e8f5ee":"white",color:active?"#1b4332":"#1a1917",cursor:"pointer",fontSize:14,transition:"all .15s"}}>{children}</button>
-  );
-  const Row=({label,children})=>(
-    <div style={{marginBottom:20}}>
-      <label style={{fontSize:13,color:"#8a8780",display:"block",marginBottom:8}}>{label}</label>
-      {children}
-    </div>
-  );
+function Quiz({onDone}){
+  const[step,setStep]=useState(0);
+  const[ans,setAns]=useState({});
+  const q=QS[step];
+  const cur=ans[q.id];
+  const ok=q.multi?(cur&&cur.length>0):(cur!=null);
 
-  return (
-    <div style={{minHeight:"100dvh",background:"#f8f7f4",fontFamily:FS,paddingBottom:40}}>
-      <header style={{display:"flex",alignItems:"center",gap:12,padding:"16px 20px",borderBottom:"1px solid #e2dfd8",background:"rgba(248,247,244,.95)",position:"sticky",top:0,zIndex:10,backdropFilter:"blur(8px)"}}>
-        <button onClick={onBack} style={{background:"none",border:"none",cursor:"pointer",color:"#8a8780",fontSize:20}}>←</button>
-        <span style={{fontFamily:FD,fontSize:20}}>Configurações</span>
-        <button onClick={()=>{ onSave({profile:{hasColor,lastColorDate:hasColor?lastColor:null,colorFreq:hasColor?freq:null},anchor,products}); onBack(); }}
-          style={{marginLeft:"auto",padding:"8px 18px",borderRadius:40,background:"#1a1917",color:"white",border:"none",cursor:"pointer",fontSize:13}}>Salvar</button>
-      </header>
-      <div style={{padding:"24px"}}>
-        <section style={{marginBottom:32}}>
-          <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",marginBottom:6}}>Ciclo de lavagem</p>
-          <h3 style={{fontFamily:FD,fontSize:22,marginBottom:8}}>Última lavagem</h3>
-          <p style={{fontSize:13,color:"#8a8780",marginBottom:14,lineHeight:1.5}}>Âncora do ciclo dia sim, dia não. Se lavar fora da sequência, use "lavei hoje" na tela principal.</p>
-          <input type="date" value={anchor} onChange={e=>setAnchor(e.target.value)}
-            style={{width:"100%",padding:"13px 14px",borderRadius:12,border:"1px solid #e2dfd8",fontSize:15,background:"white",color:"#1a1917"}}/>
-        </section>
-
-        <section style={{marginBottom:32}}>
-          <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",marginBottom:6}}>Coloração</p>
-          <h3 style={{fontFamily:FD,fontSize:22,marginBottom:14}}>Você faz coloração?</h3>
-          <div style={{display:"flex",gap:10,marginBottom:20}}>
-            <Pill active={hasColor} onClick={()=>setHasColor(true)}>Sim</Pill>
-            <Pill active={!hasColor} onClick={()=>setHasColor(false)}>Não</Pill>
-          </div>
-          {hasColor&&<>
-            <Row label="Última coloração">
-              <input type="date" value={lastColor} onChange={e=>setLastColor(e.target.value)}
-                style={{width:"100%",padding:"13px 14px",borderRadius:12,border:"1px solid #e2dfd8",fontSize:15,background:"white",color:"#1a1917"}}/>
-            </Row>
-            <Row label="Frequência de retoque">
-              <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-                {[21,28,35,42].map(f=><Pill key={f} active={freq===f} onClick={()=>setFreq(f)}>{f} dias</Pill>)}
-              </div>
-            </Row>
-          </>}
-        </section>
-
-        {products.length>0&&<section>
-          <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",marginBottom:6}}>Produtos na rotina</p>
-          <h3 style={{fontFamily:FD,fontSize:22,marginBottom:14}}>Adicionados por você</h3>
-          {products.map(p=>(
-            <div key={p.id} style={{display:"flex",alignItems:"center",gap:12,padding:"12px 0",borderBottom:"1px solid #f0ede9"}}>
-              <div style={{flex:1}}>
-                <div style={{fontSize:14,color:"#1a1917"}}>{p.name}</div>
-                <div style={{fontSize:12,color:"#8a8780",marginTop:2}}>{PHASE_LABEL[p.phase]||p.phase} · {p.frequency}</div>
-              </div>
-              <button onClick={()=>setProducts(ps=>ps.filter(x=>x.id!==p.id))}
-                style={{padding:"6px 12px",borderRadius:20,border:"1px solid #fecaca",background:"#fee2e2",color:"#9b3a3a",fontSize:12,cursor:"pointer"}}>remover</button>
-            </div>
-          ))}
-        </section>}
-      </div>
-    </div>
-  );
-}
-
-/* ── Product Sheet ───────────────────────────────────── */
-function ProductSheet({ open, onClose, profile, onAdd, history, onHistoryAction }) {
-  const [query,setQuery]=useState("");
-  const [loading,setLoading]=useState(false);
-  const [result,setResult]=useState(null);
-  const [error,setError]=useState("");
-  const [tab,setTab]=useState("search");
-
-  const search = async () => {
-    if(!query.trim()) return;
-    setLoading(true); setError(""); setResult(null);
-    try {
-      const r = await analyzeProduct(query.trim(), profile);
-      if(!r||!r.name) setError("Não consegui identificar. Tente um nome mais específico.");
-      else { setResult(r); onHistoryAction({type:"searched",product:r,query:query.trim(),at:new Date().toISOString()}); }
-    } catch { setError("Erro na busca. Tente novamente."); }
-    setLoading(false);
+  const toggle=v=>{
+    if(q.multi){
+      const c=ans[q.id]||[];
+      setAns(a=>({...a,[q.id]:c.includes(v)?c.filter(x=>x!==v):[...c,v]}));
+    } else setAns(a=>({...a,[q.id]:v}));
   };
+  const active=v=>q.multi?(ans[q.id]||[]).includes(v):ans[q.id]===v;
+  const next=()=>{if(step<QS.length-1)setStep(s=>s+1);else onDone(ans)};
 
-  const handleAdd = () => { onAdd(result); onHistoryAction({type:"added",product:result,at:new Date().toISOString()}); setResult(null); setQuery(""); onClose(); };
-  const handleSkip= () => { onHistoryAction({type:"skipped",product:result,at:new Date().toISOString()}); setResult(null); setQuery(""); };
+  return(
+    <div style={{minHeight:"100dvh",display:"flex",flexDirection:"column",background:"var(--bg)",fontFamily:FI,
+      paddingTop:"calc(var(--sat) + 32px)",paddingBottom:"calc(var(--sab) + 24px)",
+      paddingLeft:"calc(var(--sal) + var(--px))",paddingRight:"calc(var(--sar) + var(--px))"}}>
 
-  if(!open) return null;
-  const VBG={ adequado:"#e8f5ee","com ressalva":"#fef3c7","não recomendado":"#fee2e2" };
-  const VCL={ adequado:"#2d6a4f","com ressalva":"#92400e","não recomendado":"#9b3a3a" };
+      {/* step indicator */}
+      <div style={{fontSize:10,letterSpacing:".22em",textTransform:"uppercase",color:"var(--ink3)",fontWeight:500,marginBottom:20}}>
+        Perfil · {step+1}
+      </div>
 
-  return (
-    <div style={{position:"fixed",inset:0,zIndex:50,display:"flex",alignItems:"flex-end"}}>
-      <div onClick={onClose} style={{position:"absolute",inset:0,background:"rgba(26,25,23,.5)",backdropFilter:"blur(2px)"}}/>
-      <div style={{position:"relative",width:"100%",maxHeight:"92dvh",overflowY:"auto",borderRadius:"28px 28px 0 0",background:"#faf9f6",borderTop:"1px solid #e2dfd8",padding:"16px 24px 44px",animation:"rise .35s cubic-bezier(.22,1,.36,1) both"}}>
-        <div style={{width:40,height:4,borderRadius:2,background:"#e2dfd8",margin:"0 auto 16px"}}/>
-        <div style={{display:"flex",borderBottom:"1px solid #e2dfd8",marginBottom:20}}>
-          {[["search","Buscar"],["history",`Histórico${history.length?` (${history.length})`:""}`]].map(([t,l])=>(
-            <button key={t} onClick={()=>setTab(t)} style={{flex:1,padding:"10px 0",background:"none",border:"none",borderBottom:`2px solid ${tab===t?"#1a1917":"transparent"}`,cursor:"pointer",fontSize:13,fontWeight:tab===t?600:400,color:tab===t?"#1a1917":"#8a8780"}}>{l}</button>
-          ))}
-        </div>
+      {/* question */}
+      <h1 style={{fontFamily:FP,fontSize:"clamp(2rem,8vw,2.8rem)",lineHeight:1.0,letterSpacing:"-.025em",color:"var(--ink)",marginBottom:q.sub?10:28}}>
+        {q.q}
+      </h1>
+      {q.sub&&<p style={{fontSize:14,color:"var(--ink3)",marginBottom:28,lineHeight:1.5}}>{q.sub}</p>}
 
-        {tab==="search"&&<>
-          <h2 style={{fontFamily:FD,fontSize:26,lineHeight:1,letterSpacing:"-.02em",marginBottom:16}}>Estou usando…</h2>
-          <div style={{display:"flex",gap:8,marginBottom:8}}>
-            <input value={query} onChange={e=>setQuery(e.target.value)} onKeyDown={e=>e.key==="Enter"&&search()}
-              placeholder="ex: Redken All Soft Mega Mask"
-              style={{flex:1,padding:"12px 14px",borderRadius:12,border:"1px solid #e2dfd8",fontSize:15,background:"white",color:"#1a1917",outline:"none"}}/>
-            <button onClick={search} disabled={loading||!query.trim()}
-              style={{padding:"12px 18px",borderRadius:12,background:"#1a1917",color:"white",border:"none",cursor:loading||!query.trim()?"not-allowed":"pointer",fontSize:15,opacity:loading||!query.trim()?.55:1}}>
-              {loading?"…":"→"}
+      {/* options */}
+      <div style={{display:"flex",flexDirection:"column",gap:8,flex:1}}>
+        {q.opts.map(o=>{
+          const on=active(o.v);
+          return(
+            <button key={o.v} onClick={()=>toggle(o.v)}
+              style={{display:"flex",alignItems:"center",justifyContent:"space-between",
+                textAlign:"left",padding:"18px 20px",borderRadius:14,cursor:"pointer",transition:"all .15s",
+                border:`1px solid ${on?"#6a9a75":"var(--border)"}`,
+                background:on?"rgba(74,124,89,.07)":"transparent",
+              }}>
+              <span style={{fontSize:17,color:"var(--ink)",fontWeight:on?500:400}}>{o.l}</span>
+              {o.h&&<span style={{fontSize:12,color:"var(--ink3)",marginLeft:12,flexShrink:0}}>{o.h}</span>}
             </button>
-          </div>
-          {error&&<div style={{padding:"12px 14px",borderRadius:12,background:"#fee2e2",color:"#9b3a3a",fontSize:13,marginTop:12}}>{error}</div>}
-          {result&&<div style={{marginTop:16,animation:"fadeIn .3s ease"}}>
-            <div style={{background:"white",borderRadius:16,border:"1px solid #e2dfd8",padding:18,marginBottom:12}}>
-              <div style={{fontSize:11,letterSpacing:".15em",textTransform:"uppercase",color:"#8a8780",marginBottom:4}}>{result.brand} · {result.category}</div>
-              <div style={{fontFamily:FD,fontSize:21,lineHeight:1.1,marginBottom:8}}>{result.name}</div>
-              <p style={{fontSize:14,color:"#5a5855",lineHeight:1.5,marginBottom:14}}>{result.summary}</p>
-              <div style={{padding:"10px 14px",borderRadius:10,background:VBG[result.verdict]||"#f0ede9",marginBottom:12}}>
-                <div style={{fontSize:11,fontWeight:600,color:VCL[result.verdict]||"#1a1917",marginBottom:3,textTransform:"uppercase",letterSpacing:".1em"}}>{result.verdict}</div>
-                <div style={{fontSize:13,color:"#5a5855",lineHeight:1.5}}>{result.verdictReason}</div>
-              </div>
-              <div style={{display:"flex",gap:14,fontSize:12,color:"#8a8780",marginBottom:result.note?10:0}}>
-                <span>📍 <strong style={{color:"#1a1917"}}>{PHASE_LABEL[result.phase]||result.phase}</strong></span>
-                <span>🔄 {result.frequency}</span>
-              </div>
-              {result.note&&<p style={{fontSize:13,color:"#5a5855",lineHeight:1.5,borderTop:"1px solid #f0ede9",paddingTop:10}}>{result.note}</p>}
-            </div>
-            <div style={{display:"flex",gap:10}}>
-              <button onClick={handleAdd} style={{flex:1,padding:"13px 0",borderRadius:40,background:"#1a1917",color:"white",border:"none",cursor:"pointer",fontSize:14}}>+ Adicionar à rotina</button>
-              <button onClick={handleSkip} style={{padding:"13px 16px",borderRadius:40,border:"1px solid #e2dfd8",background:"none",cursor:"pointer",fontSize:14,color:"#8a8780"}}>Ignorar</button>
-            </div>
-          </div>}
-        </>}
+          );
+        })}
+      </div>
 
-        {tab==="history"&&<>
-          {history.length===0
-            ?<div style={{textAlign:"center",padding:"40px 0",color:"#8a8780",fontSize:14}}>Nenhum produto pesquisado ainda.</div>
-            :history.slice().reverse().map((h,i)=>(
-              <div key={i} style={{padding:"14px 0",borderBottom:"1px solid #f0ede9"}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
-                  <div style={{flex:1}}>
-                    <div style={{fontSize:14,fontFamily:FD,color:"#1a1917"}}>{h.product.name}</div>
-                    <div style={{fontSize:12,color:"#8a8780",marginTop:2}}>{h.product.brand} · {new Date(h.at).toLocaleDateString("pt-BR")}</div>
-                    <div style={{marginTop:6,display:"flex",gap:8,flexWrap:"wrap"}}>
-                      <span style={{fontSize:11,fontWeight:600,padding:"2px 8px",borderRadius:20,background:VBG[h.product.verdict]||"#f0ede9",color:VCL[h.product.verdict]||"#1a1917"}}>{h.product.verdict}</span>
-                      <span style={{fontSize:11,color:"#8a8780"}}>{h.type==="added"?"✓ na rotina":h.type==="skipped"?"ignorado":"pesquisado"}</span>
-                    </div>
-                  </div>
-                  {h.type!=="added"&&<button onClick={()=>{setResult(h.product);setTab("search");}}
-                    style={{padding:"6px 12px",borderRadius:20,border:"1px solid #e2dfd8",background:"none",cursor:"pointer",fontSize:12,color:"#8a8780",flexShrink:0}}>ver</button>}
-                </div>
-              </div>
-            ))
-          }
-        </>}
+      {/* nav */}
+      <div style={{display:"flex",gap:10,marginTop:28}}>
+        {step>0&&<button onClick={()=>setStep(s=>s-1)}
+          style={{padding:"15px 20px",borderRadius:40,border:"1px solid var(--border)",background:"none",cursor:"pointer",fontSize:15,color:"var(--ink2)"}}>←</button>}
+        <button onClick={next} disabled={!ok}
+          style={{flex:1,padding:"15px 0",borderRadius:40,border:"none",cursor:ok?"pointer":"not-allowed",fontSize:15,fontWeight:500,letterSpacing:".02em",
+            background:ok?"#3d6b4a":"var(--bg2)",color:ok?"#f0ede6":"var(--ink3)",transition:"all .2s"}}>
+          {step<QS.length-1?"Continuar →":"Salvar perfil →"}
+        </button>
+      </div>
+
+      {/* progress dots */}
+      <div style={{display:"flex",justifyContent:"center",gap:6,marginTop:20}}>
+        {QS.map((_,i)=><div key={i} style={{width:i===step?20:5,height:5,borderRadius:3,background:i===step?"#3d6b4a":i<step?"#6a9a75":"var(--border)",transition:"all .3s"}}/>)}
       </div>
     </div>
   );
 }
 
-/* ── Home ────────────────────────────────────────────── */
-function Home({ state, onViewRoutine, onMarkWashedToday, onOpenProducts, onSettings }) {
-  const today=todayKey();
-  const type=getDayType(today,state.anchor,state.profile);
-  const focus=getFocus(today,state.anchor);
-  const steps=buildSteps(type,focus,state.products);
-  const doneToday=(state.progress[today]||[]).filter(id=>steps.some(s=>s.id===id)).length;
-  const light=type==="rest";
-  const preColor=isPreColorDay(today,state.anchor,state.profile);
-  const days=Array.from({length:14},(_,i)=>{const k=addDays(today,i);return{key:k,date:fromKey(k),type:getDayType(k,state.anchor,state.profile)};});
+/* ── SHELF (Prateleira) ─────────────────────────────────── */
+function ShelfSheet({open,onClose,products,onSave}){
+  const[list,setList]=useState(products);
+  const[form,setForm]=useState(null); // null=list, obj=editing/adding
+  useEffect(()=>{if(open)setList(products)},[open,products]);
 
-  return (
-    <div style={{minHeight:"100dvh",background:"#f8f7f4",fontFamily:FS}}>
-      <section style={{position:"relative",minHeight:"72dvh",overflow:"hidden"}}>
-        <HeroTexture type={type}/>
-        <div style={{position:"relative",minHeight:"72dvh",display:"flex",flexDirection:"column",padding:"24px 24px 40px",color:light?"#1a1917":"white"}}>
-          <header style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-            <span style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",opacity:.7}}>Rotina Capilar</span>
-            <div style={{display:"flex",alignItems:"center",gap:10}}>
-              <button onClick={onOpenProducts} style={{background:"none",border:"1px solid rgba(255,255,255,.35)",borderRadius:40,padding:"6px 12px",cursor:"pointer",color:"inherit",fontSize:12}}>+ produto</button>
-              <button onClick={onSettings} style={{background:"none",border:"1px solid rgba(255,255,255,.35)",borderRadius:"50%",width:34,height:34,cursor:"pointer",color:"inherit",fontSize:16,display:"flex",alignItems:"center",justifyContent:"center"}}>⚙</button>
-              <ProgressRing value={doneToday} total={steps.length}/>
+  const openAdd=()=>setForm({id:null,name:"",brand:"",category:"Shampoo",benefits:"",notes:""});
+  const openEdit=p=>setForm({...p});
+  const saveForm=()=>{
+    if(!form.name.trim())return;
+    if(form.id){setList(l=>l.map(p=>p.id===form.id?{...p,...form}:p))}
+    else{setList(l=>[...l,{...form,id:Math.random().toString(36).slice(2,9),addedAt:new Date().toISOString()}])}
+    setForm(null);
+  };
+  const del=id=>{setList(l=>l.filter(p=>p.id!==id));setForm(null)};
+  const done=()=>{onSave(list);onClose()};
+  if(!open)return null;
+
+  const Lbl=({children})=><div style={{fontSize:11,letterSpacing:".14em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:8,fontWeight:500}}>{children}</div>;
+  const Inp=props=><input style={{...INP,...(props.style||{})}} {...props}/>;
+  const TA=props=><textarea style={{...INP,resize:"none",lineHeight:1.5,...(props.style||{})}} {...props}/>;
+
+  if(form){
+    return(
+      <div style={{position:"fixed",inset:0,zIndex:65,display:"flex",alignItems:"flex-end"}}>
+        <div onClick={()=>setForm(null)} style={{position:"absolute",inset:0,background:"rgba(28,25,20,.5)",backdropFilter:"blur(6px)"}}/>
+        <div style={{position:"relative",width:"100%",maxHeight:"92dvh",overflowY:"auto",borderRadius:"22px 22px 0 0",background:"var(--bg)",borderTop:"1px solid var(--border)",
+          padding:`18px var(--px) calc(var(--px) + var(--sab))`,animation:"rise .3s cubic-bezier(.22,1,.36,1) both"}}>
+          <div style={{width:32,height:3,borderRadius:2,background:"var(--border2)",margin:"0 auto 22px"}}/>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:24}}>
+            <h3 style={{fontFamily:FP,fontSize:22,color:"var(--ink)"}}>{form.id?"Editar produto":"Novo produto"}</h3>
+            <button onClick={()=>setForm(null)} style={{border:"1px solid var(--border)",borderRadius:"50%",width:32,height:32,display:"flex",alignItems:"center",justifyContent:"center",background:"none",cursor:"pointer",color:"var(--ink3)",fontSize:20}}>×</button>
+          </div>
+          <div style={{marginBottom:16}}><Lbl>Nome *</Lbl><Inp value={form.name} onChange={e=>setForm(f=>({...f,name:e.target.value}))} placeholder="ex: Gloss Absolu Masque"/></div>
+          <div style={{marginBottom:16}}><Lbl>Marca</Lbl><Inp value={form.brand} onChange={e=>setForm(f=>({...f,brand:e.target.value}))} placeholder="ex: Kérastase"/></div>
+          <div style={{marginBottom:16}}>
+            <Lbl>Categoria</Lbl>
+            <select value={form.category} onChange={e=>setForm(f=>({...f,category:e.target.value}))} style={{...INP,background:"#faf8f4"}}>
+              {CATS.map(c=><option key={c} value={c}>{c}</option>)}
+            </select>
+          </div>
+          <div style={{marginBottom:16}}><Lbl>Benefícios</Lbl><TA value={form.benefits} onChange={e=>setForm(f=>({...f,benefits:e.target.value}))} placeholder="ex: brilho, hidratação, reconstrução" style={{minHeight:68}}/></div>
+          <div style={{marginBottom:24}}><Lbl>Notas de uso</Lbl><TA value={form.notes} onChange={e=>setForm(f=>({...f,notes:e.target.value}))} placeholder="ex: usar 1× por semana, 15 min" style={{minHeight:52}}/></div>
+          <div style={{display:"flex",gap:10}}>
+            <button onClick={saveForm} disabled={!form.name.trim()}
+              style={{flex:1,padding:"15px 0",borderRadius:40,background:form.name.trim()?"var(--ink)":"var(--bg2)",color:form.name.trim()?"var(--bg)":"var(--ink3)",border:"none",cursor:form.name.trim()?"pointer":"not-allowed",fontSize:14,fontWeight:500}}>
+              {form.id?"Salvar":"Adicionar"}
+            </button>
+            {form.id&&<button onClick={()=>del(form.id)} style={{padding:"15px 18px",borderRadius:40,border:"1px solid #fecaca",background:"#fee2e2",color:"#9b3a3a",cursor:"pointer",fontSize:13}}>Remover</button>}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const grouped=CATS.reduce((a,c)=>{a[c]=list.filter(p=>p.category===c);return a},{});
+  return(
+    <div style={{position:"fixed",inset:0,zIndex:60,display:"flex",alignItems:"flex-end"}}>
+      <div onClick={done} style={{position:"absolute",inset:0,background:"rgba(28,25,20,.5)",backdropFilter:"blur(6px)"}}/>
+      <div style={{position:"relative",width:"100%",maxHeight:"92dvh",overflowY:"auto",borderRadius:"22px 22px 0 0",background:"var(--bg)",borderTop:"1px solid var(--border)",
+        padding:`18px var(--px) calc(var(--px) + var(--sab))`,animation:"rise .3s cubic-bezier(.22,1,.36,1) both"}}>
+        <div style={{width:32,height:3,borderRadius:2,background:"var(--border2)",margin:"0 auto 18px"}}/>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:22}}>
+          <div>
+            <div style={{fontSize:10,letterSpacing:".22em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:3,fontWeight:500}}>Minha prateleira</div>
+            <h3 style={{fontFamily:FP,fontSize:22,color:"var(--ink)"}}>Produtos</h3>
+          </div>
+          <div style={{display:"flex",gap:8}}>
+            <button onClick={openAdd} style={{padding:"9px 16px",borderRadius:40,background:"var(--ink)",color:"var(--bg)",border:"none",cursor:"pointer",fontSize:13,fontWeight:500}}>+ novo</button>
+            <button onClick={done} style={{padding:"9px 16px",borderRadius:40,border:"1px solid var(--border)",background:"none",cursor:"pointer",fontSize:13,color:"var(--ink2)"}}>Fechar</button>
+          </div>
+        </div>
+        {list.length===0&&<div style={{textAlign:"center",padding:"40px 0",color:"var(--ink3)",fontSize:14}}>Nenhum produto ainda.</div>}
+        {CATS.map(cat=>{
+          const items=grouped[cat]||[];
+          if(!items.length)return null;
+          return(
+            <div key={cat} style={{marginBottom:22}}>
+              <div style={{fontSize:10,letterSpacing:".18em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:10,fontWeight:500}}>{cat}</div>
+              {items.map(p=>(
+                <div key={p.id} onClick={()=>openEdit(p)}
+                  style={{display:"flex",alignItems:"flex-start",gap:14,padding:"13px 0",borderBottom:"1px solid var(--border)",cursor:"pointer"}}>
+                  <div style={{flex:1,minWidth:0}}>
+                    <div style={{fontSize:14,color:"var(--ink)",fontWeight:500}}>{p.name}</div>
+                    {p.brand&&<div style={{fontSize:12,color:"var(--ink3)",marginTop:2}}>{p.brand}</div>}
+                    {p.benefits&&<div style={{fontSize:12,color:"var(--ink2)",marginTop:5,lineHeight:1.45}}>{p.benefits}</div>}
+                  </div>
+                  <span style={{fontSize:16,color:"var(--border2)",marginTop:2,flexShrink:0}}>›</span>
+                </div>
+              ))}
             </div>
-          </header>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ── PRODUCT PICKER (in routine) ────────────────────────── */
+function Picker({open,slot,cat,products,currentId,onSelect,onClose}){
+  if(!open)return null;
+  const items=products.filter(p=>p.category===cat);
+  return(
+    <div style={{position:"fixed",inset:0,zIndex:75,display:"flex",alignItems:"flex-end"}}>
+      <div onClick={onClose} style={{position:"absolute",inset:0,background:"rgba(28,25,20,.5)",backdropFilter:"blur(6px)"}}/>
+      <div style={{position:"relative",width:"100%",maxHeight:"72dvh",overflowY:"auto",borderRadius:"22px 22px 0 0",background:"var(--bg)",borderTop:"1px solid var(--border)",
+        padding:`18px var(--px) calc(var(--px) + var(--sab))`,animation:"rise .3s cubic-bezier(.22,1,.36,1) both"}}>
+        <div style={{width:32,height:3,borderRadius:2,background:"var(--border2)",margin:"0 auto 18px"}}/>
+        <div style={{fontSize:10,letterSpacing:".22em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:4,fontWeight:500}}>Trocar produto</div>
+        <h3 style={{fontFamily:FP,fontSize:20,color:"var(--ink)",marginBottom:18}}>{cat}</h3>
+        {items.length===0&&<p style={{color:"var(--ink3)",fontSize:14,paddingBottom:16}}>Nenhum produto desta categoria na prateleira.</p>}
+        {currentId&&<button onClick={()=>{onSelect(slot,null);onClose()}}
+          style={{width:"100%",textAlign:"left",padding:"13px 16px",borderRadius:12,border:"1px solid var(--border)",background:"transparent",cursor:"pointer",marginBottom:8,fontSize:14,color:"var(--ink3)"}}>
+          — Nenhum (usar padrão)
+        </button>}
+        {items.map(p=>{
+          const on=p.id===currentId;
+          return(
+            <button key={p.id} onClick={()=>{onSelect(slot,p.id);onClose()}}
+              style={{width:"100%",textAlign:"left",padding:"15px 16px",borderRadius:12,cursor:"pointer",marginBottom:8,
+                border:`1px solid ${on?"#6a9a75":"var(--border)"}`,background:on?"rgba(74,124,89,.06)":"transparent"}}>
+              <div style={{fontSize:15,color:"var(--ink)",fontWeight:on?600:400}}>{p.name}</div>
+              {p.brand&&<div style={{fontSize:12,color:"var(--ink3)",marginTop:2}}>{p.brand}</div>}
+              {p.benefits&&<div style={{fontSize:12,color:"var(--ink2)",marginTop:4,lineHeight:1.4}}>{p.benefits}</div>}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ── SETTINGS ───────────────────────────────────────────── */
+function SettingsScreen({state,onSave,onBack,onResetQuiz}){
+  const[anchor,setAnchor]=useState(state.anchor||todayKey());
+  const[colorDates,setColorDates]=useState(state.colorDates||[]);
+  const[newDate,setNewDate]=useState("");
+  const p=state.profile||{};
+
+  const addDate=()=>{if(newDate&&!colorDates.includes(newDate)){setColorDates(d=>[...d,newDate].sort());setNewDate("")}};
+  const save=()=>{onSave({anchor,colorDates});onBack()};
+
+  const chem={coloracao:"Coloração",alisamento:"Alisamento",relaxamento:"Relaxamento",henna:"Henna",nenhuma:"Nenhuma"};
+  const goal={reconstrucao:"Reconstrução",hidratacao:"Hidratação",crescimento:"Crescimento",frizz:"Anti-frizz"};
+
+  const Sec=({title,children})=>(
+    <section style={{marginBottom:30}}>
+      <div style={{fontSize:10,letterSpacing:".22em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:8,fontWeight:500}}>{title}</div>
+      {children}
+    </section>
+  );
+  const Lbl=({children})=><div style={{fontSize:12,color:"var(--ink3)",marginBottom:7,letterSpacing:".04em"}}>{children}</div>;
+
+  return(
+    <div style={{minHeight:"100dvh",background:"var(--bg)",fontFamily:FI,paddingBottom:"calc(40px + var(--sab))"}}>
+      <div style={{background:"rgba(240,237,230,.95)",borderBottom:"1px solid var(--border)",position:"sticky",top:0,zIndex:10,backdropFilter:"blur(10px)",
+        paddingTop:"calc(var(--sat) + 12px)",paddingBottom:12,
+        paddingLeft:"calc(var(--sal) + var(--px))",paddingRight:"calc(var(--sar) + var(--px))"}}>
+        <div style={{display:"flex",alignItems:"center",gap:12}}>
+          <button onClick={onBack} style={{background:"none",border:"none",cursor:"pointer",color:"var(--ink3)",fontSize:24,lineHeight:1}}>←</button>
+          <span style={{fontFamily:FP,fontSize:20,color:"var(--ink)"}}>Configurações</span>
+          <button onClick={save} style={{marginLeft:"auto",padding:"9px 20px",borderRadius:40,background:"var(--ink)",color:"var(--bg)",border:"none",cursor:"pointer",fontSize:13,fontWeight:500}}>Salvar</button>
+        </div>
+      </div>
+      <div style={{padding:"28px var(--px) 0"}}>
+        <Sec title="Perfil">
+          <div style={{background:"#faf8f4",borderRadius:14,border:"1px solid var(--border)",padding:"16px",marginBottom:10}}>
+            {[["Tipo",p.hairType],["Porosidade",p.porosity],["Química",(Array.isArray(p.chemistry)?p.chemistry:[]).map(c=>chem[c]||c).join(", ")],["Objetivo",goal[p.goal]||p.goal]].map(([k,v])=>v?(
+              <div key={k} style={{display:"flex",justifyContent:"space-between",padding:"7px 0",borderBottom:"1px solid var(--border)"}}>
+                <span style={{fontSize:13,color:"var(--ink3)"}}>{k}</span>
+                <span style={{fontSize:13,color:"var(--ink)",textTransform:"capitalize"}}>{v}</span>
+              </div>
+            ):null)}
+          </div>
+          <button onClick={onResetQuiz} style={{width:"100%",padding:"12px 0",borderRadius:12,border:"1px solid var(--border)",background:"none",cursor:"pointer",fontSize:13,color:"var(--ink2)"}}>Refazer quiz de perfil</button>
+        </Sec>
+
+        <Sec title="Ciclo de lavagem">
+          <Lbl>Última lavagem (âncora do ciclo)</Lbl>
+          <p style={{fontSize:12,color:"var(--ink3)",marginBottom:10,lineHeight:1.5}}>O app alterna lavagem/manutenção a partir desta data. Use "lavei hoje" para reajustar sem abrir as configurações.</p>
+          <input type="date" value={anchor} onChange={e=>setAnchor(e.target.value)} style={INP}/>
+        </Sec>
+
+        <Sec title="Dias de coloração">
+          <p style={{fontSize:12,color:"var(--ink3)",marginBottom:12,lineHeight:1.5}}>Adicione as datas que vai colorir. A lavagem anterior recebe um aviso automático para usar o acidificante.</p>
+          <div style={{display:"flex",gap:8,marginBottom:10}}>
+            <input type="date" value={newDate} onChange={e=>setNewDate(e.target.value)} style={{...INP,flex:1}}/>
+            <button onClick={addDate} disabled={!newDate}
+              style={{padding:"14px 18px",borderRadius:12,background:newDate?"var(--ink)":"var(--bg2)",color:newDate?"var(--bg)":"var(--ink3)",border:"none",cursor:newDate?"pointer":"not-allowed",fontSize:15}}>+</button>
+          </div>
+          {colorDates.length===0&&<p style={{fontSize:13,color:"var(--ink3)"}}>Nenhuma data adicionada.</p>}
+          {colorDates.map(d=>(
+            <div key={d} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 14px",borderRadius:10,background:"#faf8f4",border:"1px solid var(--border)",marginBottom:7}}>
+              <span style={{fontSize:14,color:"var(--ink)"}}>{fromKey(d).toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"})}</span>
+              <button onClick={()=>setColorDates(ds=>ds.filter(x=>x!==d))} style={{border:"none",background:"none",cursor:"pointer",color:"var(--ink3)",fontSize:20,lineHeight:1}}>×</button>
+            </div>
+          ))}
+        </Sec>
+      </div>
+    </div>
+  );
+}
+
+/* ── HOME ───────────────────────────────────────────────── */
+function Home({state,onRoutine,onWashed,onSkip,onSettings,onShelf}){
+  const today=todayKey();
+  const skipped=(state.skipped||[]).includes(today);
+  const type=skipped?"recovery":getDayType(today,state.anchor,state.colorDates);
+  const focus=getFocus(today,state.anchor);
+  const steps=buildSteps(type,focus,state.sel);
+  const done=(state.progress[today]||[]).filter(id=>steps.some(s=>s.id===id)).length;
+  const precolor=type!=="color"&&isPreColor(today,state.anchor,state.colorDates);
+  const th=T[type];
+
+  const days=Array.from({length:14},(_,i)=>{
+    const k=addDays(today,i);
+    const sk=(state.skipped||[]).includes(k);
+    return{key:k,date:fromKey(k),type:sk?"recovery":getDayType(k,state.anchor,state.colorDates)};
+  });
+
+  return(
+    <div style={{minHeight:"100dvh",background:"var(--bg)",fontFamily:FI}}>
+      <Hero type={type}>
+        <div style={{minHeight:"68dvh",display:"flex",flexDirection:"column",
+          paddingTop:"calc(var(--sat) + 20px)",
+          paddingBottom:44,
+          paddingLeft:"calc(var(--sal) + var(--px))",
+          paddingRight:"calc(var(--sar) + var(--px))"}}>
+
+          {/* top bar */}
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <span style={{fontSize:11,letterSpacing:".24em",textTransform:"uppercase",color:"rgba(240,237,230,.5)",fontWeight:500}}>Ritual</span>
+            <div style={{display:"flex",alignItems:"center",gap:8}}>
+              <button onClick={onShelf}
+                style={{padding:"7px 14px",borderRadius:40,background:"rgba(240,237,230,.1)",border:"1px solid rgba(240,237,230,.2)",cursor:"pointer",color:"rgba(240,237,230,.8)",fontSize:12,letterSpacing:".04em"}}>
+                prateleira
+              </button>
+              <button onClick={onSettings}
+                style={{width:32,height:32,borderRadius:"50%",background:"rgba(240,237,230,.1)",border:"1px solid rgba(240,237,230,.2)",cursor:"pointer",color:"rgba(240,237,230,.8)",fontSize:15,display:"flex",alignItems:"center",justifyContent:"center"}}>
+                ⚙
+              </button>
+              <Ring value={done} total={steps.length}/>
+            </div>
+          </div>
+
+          {/* main content */}
           <div style={{marginTop:"auto"}}>
-            {preColor&&<div style={{display:"inline-flex",alignItems:"center",gap:6,background:"rgba(0,0,0,.28)",borderRadius:20,padding:"6px 14px",marginBottom:16,fontSize:13,backdropFilter:"blur(4px)"}}>
-              ⚠️ amanhã é coloração — use o acidificante hoje no fim do banho
-            </div>}
-            <p style={{fontSize:14,opacity:.75}}>{new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"})}</p>
-            <h1 style={{fontFamily:FD,fontSize:"clamp(2.4rem,11vw,3.4rem)",lineHeight:.98,letterSpacing:"-.035em",margin:"12px 0 16px"}}>{DAY_LABEL[type]}</h1>
-            <p style={{fontSize:15,opacity:.8,maxWidth:320,lineHeight:1.5}}>{DAY_SUB[type]}</p>
-            <div style={{display:"flex",gap:12,marginTop:28,flexWrap:"wrap",alignItems:"center"}}>
-              <button onClick={()=>onViewRoutine(today)} style={{background:"none",border:"none",borderBottom:"1px solid currentColor",paddingBottom:4,cursor:"pointer",fontSize:14,color:"inherit",opacity:.9}}>Ver rotina →</button>
-              <button onClick={onMarkWashedToday} style={{background:"rgba(255,255,255,.15)",border:"1px solid rgba(255,255,255,.3)",borderRadius:40,padding:"6px 14px",cursor:"pointer",fontSize:13,color:"inherit",backdropFilter:"blur(4px)"}}>✓ lavei hoje</button>
+            {precolor&&(
+              <div style={{display:"inline-block",padding:"7px 14px",borderRadius:20,background:"rgba(0,0,0,.3)",backdropFilter:"blur(6px)",fontSize:12,color:"rgba(240,237,230,.85)",marginBottom:16,lineHeight:1.4}}>
+                ⚠ amanhã é coloração — acidificante ao final do banho de hoje
+              </div>
+            )}
+            <p style={{fontSize:12,color:"rgba(240,237,230,.45)",marginBottom:10,letterSpacing:".04em"}}>
+              {new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"})}
+            </p>
+            <h1 style={{fontFamily:FP,fontSize:"clamp(3rem,13vw,4.2rem)",lineHeight:.92,letterSpacing:"-.03em",color:th.fg,marginBottom:14}}>
+              {th.label}
+            </h1>
+            <p style={{fontSize:14,color:"rgba(240,237,230,.55)",maxWidth:280,lineHeight:1.55,marginBottom:24}}>
+              {th.sub}
+            </p>
+            <div style={{display:"flex",gap:10,flexWrap:"wrap",alignItems:"center"}}>
+              <button onClick={()=>onRoutine(today)}
+                style={{padding:"11px 22px",borderRadius:40,background:"rgba(240,237,230,.12)",border:"1px solid rgba(240,237,230,.25)",cursor:"pointer",fontSize:14,color:th.fg,backdropFilter:"blur(6px)",letterSpacing:".02em"}}>
+                Ver rotina →
+              </button>
+              <button onClick={onWashed}
+                style={{padding:"11px 18px",borderRadius:40,background:"rgba(240,237,230,.08)",border:"1px solid rgba(240,237,230,.18)",cursor:"pointer",fontSize:13,color:"rgba(240,237,230,.7)"}}>
+                ✓ lavei hoje
+              </button>
+              {type==="wash"&&!skipped&&(
+                <button onClick={onSkip}
+                  style={{padding:"11px 16px",borderRadius:40,background:"transparent",border:"1px solid rgba(240,237,230,.12)",cursor:"pointer",fontSize:13,color:"rgba(240,237,230,.4)"}}>
+                  pular
+                </button>
+              )}
             </div>
           </div>
         </div>
-      </section>
+      </Hero>
 
-      <section style={{padding:"24px 24px 0"}}>
-        <div style={{borderRadius:20,border:"1px solid #e2dfd8",background:"white",padding:22}}>
-          <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",marginBottom:10}}>Insight da semana</p>
-          <p style={{fontSize:16,lineHeight:1.5,color:"#1a1917"}}>{FOCUS_INSIGHT[focus]}</p>
+      {/* 14-day calendar */}
+      <section style={{paddingTop:22,paddingBottom:8}}>
+        <div style={{fontSize:10,letterSpacing:".2em",textTransform:"uppercase",color:"var(--ink3)",
+          paddingLeft:"calc(var(--sal) + var(--px))",paddingRight:"calc(var(--sar) + var(--px))",marginBottom:12,fontWeight:500}}>
+          Próximos 14 dias
         </div>
-      </section>
-
-      <section style={{paddingTop:24}}>
-        <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",padding:"0 24px",marginBottom:14}}>Próximos 14 dias</p>
-        <div style={{display:"flex",gap:8,overflowX:"auto",padding:"0 24px 8px"}}>
-          {days.map((d,i)=>(
-            <button key={d.key} onClick={()=>onViewRoutine(d.key)}
-              style={{flexShrink:0,display:"flex",flexDirection:"column",alignItems:"center",gap:8,minWidth:58,padding:"14px 10px",borderRadius:20,border:`1px solid ${i===0?"#1a1917":"#e2dfd8"}`,background:i===0?"#f0ede9":"white",cursor:"pointer"}}>
-              <span style={{fontSize:10,textTransform:"uppercase",letterSpacing:".12em",color:"#8a8780"}}>{d.date.toLocaleDateString("pt-BR",{weekday:"short"}).slice(0,3)}</span>
-              <span style={{fontFamily:FD,fontSize:20,color:"#1a1917"}}>{d.date.getDate()}</span>
-              <span style={{width:20,height:5,borderRadius:3,background:DOT[d.type]}}/>
-            </button>
-          ))}
+        <div style={{display:"flex",gap:7,overflowX:"auto",paddingLeft:"calc(var(--sal) + var(--px))",paddingRight:"calc(var(--sar) + var(--px))",paddingBottom:4}}>
+          {days.map((d,i)=>{
+            const th2=T[d.type]||T.wash;
+            return(
+              <button key={d.key} onClick={()=>onRoutine(d.key)}
+                style={{flexShrink:0,display:"flex",flexDirection:"column",alignItems:"center",gap:6,minWidth:52,padding:"13px 8px",borderRadius:16,
+                  border:`1px solid ${i===0?"var(--ink2)":"var(--border)"}`,
+                  background:i===0?"var(--bg2)":"transparent",cursor:"pointer"}}>
+                <span style={{fontSize:9,textTransform:"uppercase",letterSpacing:".14em",color:"var(--ink3)",fontWeight:500}}>
+                  {d.date.toLocaleDateString("pt-BR",{weekday:"short"}).replace(".","").slice(0,3)}
+                </span>
+                <span style={{fontFamily:FP,fontSize:18,color:"var(--ink)",lineHeight:1}}>{d.date.getDate()}</span>
+                <span style={{width:16,height:3,borderRadius:2,background:th2.dot}}/>
+              </button>
+            );
+          })}
         </div>
-        <div style={{display:"flex",gap:20,padding:"10px 24px",fontSize:12,color:"#8a8780"}}>
-          {[["wash","lavagem"],["color","coloração"],["rest","descanso"]].map(([t,l])=>(
-            <span key={t} style={{display:"inline-flex",alignItems:"center",gap:6}}>
-              <span style={{display:"inline-block",width:14,height:5,borderRadius:3,background:DOT[t]}}/>{l}
+        <div style={{display:"flex",gap:18,paddingLeft:"calc(var(--sal) + var(--px))",paddingRight:"calc(var(--sar) + var(--px))",paddingTop:10,fontSize:10,color:"var(--ink3)",fontWeight:500,letterSpacing:".04em"}}>
+          {[["wash","Lavagem"],["recovery","Manutenção"],["color","Coloração"]].map(([t,l])=>(
+            <span key={t} style={{display:"inline-flex",alignItems:"center",gap:5}}>
+              <span style={{width:12,height:3,borderRadius:2,background:T[t].dot,display:"inline-block"}}/>{l}
             </span>
           ))}
         </div>
       </section>
-      <div style={{height:40}}/>
+      <div style={{height:"calc(24px + var(--sab))"}}/>
     </div>
   );
 }
 
-/* ── Routine Detail ──────────────────────────────────── */
-function RoutineDetail({ state, dispatch, dateKey, onBack, onNavDay }) {
-  const [timer,setTimer]=useState(null);
-  const type=getDayType(dateKey,state.anchor,state.profile);
+/* ── ROUTINE DETAIL ─────────────────────────────────────── */
+function Routine({state,dispatch,dateKey,onBack,onNavDay}){
+  const[timer,setTimer]=useState(null);
+  const[picker,setPicker]=useState(null);
+  const touchX=useRef(null);
+
+  const skipped=(state.skipped||[]).includes(dateKey);
+  const type=skipped?"recovery":getDayType(dateKey,state.anchor,state.colorDates);
   const focus=getFocus(dateKey,state.anchor);
-  const steps=buildSteps(type,focus,state.products);
+  const steps=buildSteps(type,focus,state.sel);
   const doneIds=state.progress[dateKey]||[];
   const done=doneIds.filter(id=>steps.some(s=>s.id===id)).length;
   const isToday=dateKey===todayKey();
-  const preColor=isPreColorDay(dateKey,state.anchor,state.profile);
-  const stroke=STROKE[type]||"#2d6a4f";
-  const group=phase=>steps.filter(s=>s.phase===phase);
+  const precolor=type!=="color"&&isPreColor(dateKey,state.anchor,state.colorDates);
+  const th=T[type]||T.wash;
+
+  const onTS=e=>touchX.current=e.touches[0].clientX;
+  const onTE=e=>{
+    if(touchX.current===null)return;
+    const dx=e.changedTouches[0].clientX-touchX.current;
+    if(Math.abs(dx)>55)onNavDay(dx<0?1:-1);
+    touchX.current=null;
+  };
+
+  const getProdName=slot=>{
+    const pid=state.sel?.[slot]; if(!pid)return null;
+    return state.products.find(p=>p.id===pid)?.name||null;
+  };
+
+  const group=ph=>steps.filter(s=>s.phase===ph);
 
   const renderStep=(s,night=false)=>{
     const isDone=doneIds.includes(s.id);
-    return (
-      <div key={s.id} style={{display:"flex",gap:16,padding:"16px 0",borderBottom:night?"none":"1px solid #f0ede9",opacity:isDone?.42:1,transition:"opacity .2s"}}>
-        <button onClick={()=>dispatch({dateKey,id:s.id})}
-          style={{width:24,height:24,borderRadius:"50%",flexShrink:0,marginTop:2,cursor:"pointer",border:`1.5px solid ${isDone?(night?"rgba(255,255,255,.7)":stroke):"rgba(0,0,0,.18)"}`,background:"transparent",display:"flex",alignItems:"center",justifyContent:"center"}}>
-          {isDone&&<svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke={night?"white":stroke} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+    const pname=s.slot?getProdName(s.slot):null;
+    const cat=s.slot?SLOT_CAT[s.slot]:null;
+    const fg=night?"rgba(240,237,230,.9)":"var(--ink)";
+    const sub=night?"rgba(240,237,230,.45)":"var(--ink3)";
+    return(
+      <div key={s.id} style={{display:"flex",gap:14,padding:"16px 0",borderBottom:night?"none":`1px solid ${isDone?"transparent":"var(--border)"}`,opacity:isDone?.38:1,transition:"opacity .2s"}}>
+        <button onClick={()=>dispatch({type:"toggle",dateKey,id:s.id})}
+          style={{width:20,height:20,borderRadius:"50%",flexShrink:0,marginTop:3,cursor:"pointer",
+            border:`1.5px solid ${isDone?(night?"rgba(240,237,230,.6)":th.stroke):"var(--border2)"}`,
+            background:"transparent",display:"flex",alignItems:"center",justifyContent:"center"}}>
+          {isDone&&<svg width="9" height="9" viewBox="0 0 9 9" fill="none">
+            <path d="M1.5 4.5l2 2 4-4" stroke={night?"#f0ede6":th.stroke} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>}
         </button>
-        <div style={{flex:1}}>
-          <p style={{fontSize:17,lineHeight:1.3,textDecoration:isDone?"line-through":"none",color:night?"inherit":"#1a1917",fontFamily:FD}}>{s.title}</p>
-          {s.detail&&<p style={{marginTop:4,fontSize:13,lineHeight:1.5,color:night?"rgba(255,255,255,.6)":"#8a8780"}}>{s.detail}</p>}
-          {s.minutes&&<button onClick={()=>setTimer(s)} style={{marginTop:10,display:"inline-flex",alignItems:"center",gap:6,padding:"6px 14px",borderRadius:40,border:`1px solid ${night?"rgba(255,255,255,.25)":"rgba(0,0,0,.12)"}`,background:"none",cursor:"pointer",fontSize:12,color:night?"rgba(255,255,255,.75)":stroke}}>⏱ {s.minutes} min</button>}
+        <div style={{flex:1,minWidth:0}}>
+          <p style={{fontSize:16,lineHeight:1.3,textDecoration:isDone?"line-through":"none",color:fg,fontFamily:FP,fontWeight:400}}>{s.title}</p>
+          {s.detail&&<p style={{marginTop:4,fontSize:12,lineHeight:1.5,color:sub}}>{s.detail}</p>}
+          <div style={{display:"flex",gap:8,marginTop:s.minutes||s.slot?9:0,flexWrap:"wrap",alignItems:"center"}}>
+            {s.minutes&&(
+              <button onClick={()=>setTimer(s)}
+                style={{display:"inline-flex",alignItems:"center",gap:4,padding:"5px 12px",borderRadius:40,
+                  border:`1px solid ${night?"rgba(240,237,230,.2)":"var(--border)"}`,
+                  background:"none",cursor:"pointer",fontSize:11,color:night?"rgba(240,237,230,.6)":"var(--ink3)",letterSpacing:".04em"}}>
+                ⏱ {s.minutes} min
+              </button>
+            )}
+            {s.slot&&cat&&(
+              <button onClick={()=>setPicker({slot:s.slot,cat})}
+                style={{display:"inline-flex",alignItems:"center",gap:4,padding:"5px 12px",borderRadius:40,cursor:"pointer",fontSize:11,letterSpacing:".04em",
+                  border:`1px solid ${pname?"rgba(74,124,89,.4)":"var(--border)"}`,
+                  background:pname?"rgba(74,124,89,.07)":"none",
+                  color:pname?"#3d6b4a":"var(--ink3)"}}>
+                {pname?`✓ ${pname}`:`trocar ${cat.toLowerCase()}`}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     );
   };
 
-  return (
-    <div style={{minHeight:"100dvh",background:"#f8f7f4",fontFamily:FS,paddingBottom:160}}>
-      <header style={{position:"sticky",top:0,zIndex:10,display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,borderBottom:"1px solid #e2dfd8",background:"rgba(248,247,244,.94)",backdropFilter:"blur(8px)",padding:"14px 20px"}}>
-        <button onClick={onBack} style={{background:"none",border:"none",cursor:"pointer",color:"#8a8780",fontSize:20}}>←</button>
-        <div style={{display:"flex",alignItems:"center",gap:12}}>
-          <button onClick={()=>onNavDay(-1)} style={{background:"none",border:"none",cursor:"pointer",color:"#8a8780",fontSize:20}}>‹</button>
-          <span style={{fontSize:14,minWidth:120,textAlign:"center",color:"#1a1917"}}>{isToday?"Hoje":fromKey(dateKey).toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"short"})}</span>
-          <button onClick={()=>onNavDay(1)} style={{background:"none",border:"none",cursor:"pointer",color:"#8a8780",fontSize:20}}>›</button>
-        </div>
-        <span style={{fontSize:13,color:"#8a8780",fontVariantNumeric:"tabular-nums"}}>{done}/{steps.length}</span>
-      </header>
+  return(
+    <div style={{minHeight:"100dvh",background:"var(--bg)",fontFamily:FI,paddingBottom:"calc(170px + var(--sab))"}}
+      onTouchStart={onTS} onTouchEnd={onTE}>
 
-      <div style={{padding:"28px 24px 0"}}>
-        <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",marginBottom:10}}>{focus==="reconstrucao"?"Semana de reconstrução":"Semana de hidratação"}</p>
-        <h1 style={{fontFamily:FD,fontSize:"clamp(2.2rem,10vw,3rem)",lineHeight:.98,letterSpacing:"-.03em"}}>{isToday?DAY_LABEL[type]:type==="wash"?"Dia de lavagem":type==="color"?"Dia de coloração":"Dia de descanso"}</h1>
-        <p style={{marginTop:10,fontSize:14,color:"#8a8780",lineHeight:1.5}}>{DAY_SUB[type]}</p>
-        <span style={{display:"inline-block",marginTop:14,height:5,width:48,borderRadius:3,background:DOT[type]}}/>
+      {/* sticky header */}
+      <div style={{position:"sticky",top:0,zIndex:20,background:"rgba(240,237,230,.94)",backdropFilter:"blur(12px)",borderBottom:"1px solid var(--border)",
+        paddingTop:"calc(var(--sat) + 10px)",paddingBottom:10,
+        paddingLeft:"calc(var(--sal) + 16px)",paddingRight:"calc(var(--sar) + 16px)"}}>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:8}}>
+          <button onClick={onBack} style={{background:"none",border:"none",cursor:"pointer",color:"var(--ink3)",fontSize:24,lineHeight:1,padding:"4px 0"}}>←</button>
+          <div style={{display:"flex",alignItems:"center",gap:10}}>
+            <button onClick={()=>onNavDay(-1)} style={{background:"none",border:"none",cursor:"pointer",color:"var(--ink3)",fontSize:24,lineHeight:1}}>‹</button>
+            <span style={{fontSize:13,minWidth:128,textAlign:"center",color:"var(--ink)",fontWeight:500}}>
+              {isToday?"Hoje":fromKey(dateKey).toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"short"})}
+            </span>
+            <button onClick={()=>onNavDay(1)} style={{background:"none",border:"none",cursor:"pointer",color:"var(--ink3)",fontSize:24,lineHeight:1}}>›</button>
+          </div>
+          <span style={{fontSize:11,color:"var(--ink3)",fontVariantNumeric:"tabular-nums",fontWeight:500,minWidth:32,textAlign:"right"}}>{done}/{steps.length}</span>
+        </div>
       </div>
 
-      {preColor&&<div style={{margin:"16px 24px 0",padding:"14px 16px",borderRadius:14,background:"#fef3c7",border:"1px solid #fde68a",fontSize:13,color:"#92400e",lineHeight:1.5}}>
-        ⚠️ Amanhã é dia de coloração. Ao final deste banho aplique o <strong>Acidificante Kérastase</strong> — remove depósito mineral para a cor oxidar de forma uniforme.
+      {/* title block */}
+      <div style={{padding:"24px var(--px) 0",paddingLeft:"calc(var(--sal) + var(--px))",paddingRight:"calc(var(--sar) + var(--px))"}}>
+        <div style={{fontSize:10,letterSpacing:".22em",textTransform:"uppercase",color:"var(--ink3)",marginBottom:10,fontWeight:500}}>
+          {focus==="reco"?"Semana de reconstrução":"Semana de hidratação"}
+        </div>
+        <h1 style={{fontFamily:FP,fontSize:"clamp(2rem,9vw,3rem)",lineHeight:.95,letterSpacing:"-.025em",color:"var(--ink)"}}>
+          {th.label}
+        </h1>
+        <p style={{marginTop:8,fontSize:13,color:"var(--ink3)",lineHeight:1.55}}>{th.sub}</p>
+        <div style={{marginTop:14,width:36,height:3,borderRadius:2,background:th.dot}}/>
+      </div>
+
+      {/* alerts */}
+      {precolor&&<div style={{margin:"14px var(--px) 0",padding:"13px 16px",borderRadius:13,background:"#fdf6e3",border:"1px solid #e8d89a",fontSize:12,color:"#7a5c1e",lineHeight:1.55}}>
+        ⚠ Amanhã é coloração. Ao final deste banho aplique o acidificante para remover depósito mineral — a cor fica mais uniforme.
       </div>}
-      {type==="color"&&<div style={{margin:"16px 24px 0",padding:"14px 16px",borderRadius:14,background:"#fee2e2",border:"1px solid #fecaca",fontSize:13,color:"#9b3a3a",lineHeight:1.5}}>
-        🎨 Dia de coloração — sem lavagem. A oleosidade natural protege o couro durante o processo.
+      {type==="color"&&<div style={{margin:"14px var(--px) 0",padding:"13px 16px",borderRadius:13,background:"#fdf0f0",border:"1px solid #e8b8b8",fontSize:12,color:"#7a2020",lineHeight:1.55}}>
+        Hoje é dia de coloração — cabelo vai sujo. A oleosidade natural protege o couro cabeludo.
       </div>}
 
-      <div style={{padding:"24px 24px 0"}}>
-        {["banho","pos-banho"].map(phase=>group(phase).length?(
-          <section key={phase} style={{marginBottom:28}}>
-            <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",borderBottom:"1px solid #e2dfd8",paddingBottom:12,marginBottom:0}}>{PHASE_LABEL[phase]}</p>
-            {group(phase).map(s=>renderStep(s))}
+      {/* steps */}
+      <div style={{padding:"20px var(--px) 0",paddingLeft:"calc(var(--sal) + var(--px))",paddingRight:"calc(var(--sar) + var(--px))"}}>
+        {["banho","pos"].map(ph=>group(ph).length?(
+          <section key={ph} style={{marginBottom:24}}>
+            <div style={{fontSize:10,letterSpacing:".2em",textTransform:"uppercase",color:"var(--ink3)",borderBottom:"1px solid var(--border)",paddingBottom:10,marginBottom:0,fontWeight:500}}>
+              {ph==="banho"?"No banho":"Pós-banho"}
+            </div>
+            {group(ph).map(s=>renderStep(s))}
           </section>
         ):null)}
       </div>
 
-      <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:20,padding:"0 16px 16px"}}>
-        <div style={{borderRadius:20,background:"oklch(0.29 0.062 275)",padding:"16px 20px 20px",color:"white",boxShadow:"0 -4px 32px rgba(0,0,0,.2)"}}>
-          <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",opacity:.6,marginBottom:4}}>{PHASE_LABEL.noite}</p>
+      {/* night — fixed bottom */}
+      <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:20,
+        paddingLeft:"calc(var(--sal) + 16px)",paddingRight:"calc(var(--sar) + 16px)",
+        paddingBottom:"calc(16px + var(--sab))"}}>
+        <div style={{borderRadius:20,background:"#1e1b3a",padding:"15px 20px 18px",color:"rgba(240,237,230,.9)",boxShadow:"0 -8px 40px rgba(0,0,0,.18)"}}>
+          <div style={{fontSize:10,letterSpacing:".2em",textTransform:"uppercase",opacity:.45,marginBottom:8,fontWeight:500}}>Ritual da noite</div>
           {group("noite").map(s=>renderStep(s,true))}
         </div>
       </div>
 
       <TimerSheet open={!!timer} title={timer?.title||""} minutes={timer?.minutes||1} type={type} onClose={()=>setTimer(null)}/>
+      {picker&&<Picker open slot={picker.slot} cat={picker.cat} products={state.products}
+        currentId={state.sel?.[picker.slot]||null}
+        onSelect={(slot,pid)=>dispatch({type:"selProd",slot,pid})}
+        onClose={()=>setPicker(null)}/>}
     </div>
   );
 }
 
-/* ── App ─────────────────────────────────────────────── */
-function App() {
-  const [screen,setScreen]=useState("loading");
-  const [state,setState]=useState(EMPTY);
-  const [routineDate,setRoutineDate]=useState(todayKey());
-  const [showProducts,setShowProducts]=useState(false);
+/* ── APP SHELL ──────────────────────────────────────────── */
+function App(){
+  const[screen,setScreen]=useState("loading");
+  const[state,setState]=useState(DEF);
+  const[routineDate,setRoutineDate]=useState(todayKey());
+  const[shelf,setShelf]=useState(false);
 
-  useEffect(()=>{ setState(loadState()); setScreen("home"); },[]);
-  useEffect(()=>{ if(screen!=="loading") saveState(state); },[state]);
+  useEffect(()=>{const s=load();setState(s);setScreen(s.profile?"home":"quiz")},[]);
+  useEffect(()=>{if(screen!=="loading")save(state)},[state,screen]);
 
-  const toggle=({dateKey,id})=>setState(s=>{
-    const done=s.progress[dateKey]||[];
-    const next=done.includes(id)?done.filter(i=>i!==id):[...done,id];
-    return {...s,progress:{...s.progress,[dateKey]:next}};
-  });
+  const dispatch=useCallback(a=>{
+    setState(s=>{
+      if(a.type==="toggle"){
+        const done=s.progress[a.dateKey]||[];
+        const next=done.includes(a.id)?done.filter(i=>i!==a.id):[...done,a.id];
+        return{...s,progress:{...s.progress,[a.dateKey]:next}};
+      }
+      if(a.type==="selProd"){
+        const sel={...(s.sel||{})};
+        if(a.pid)sel[a.slot]=a.pid; else delete sel[a.slot];
+        return{...s,sel};
+      }
+      return s;
+    });
+  },[]);
 
-  const markWashedToday=()=>setState(s=>({...s,anchor:todayKey()}));
-  const addProduct=p=>setState(s=>({...s,products:[...s.products,{...p,id:Math.random().toString(36).slice(2,9),addedAt:new Date().toISOString()}]}));
-  const addHistory=e=>setState(s=>({...s,productHistory:[...(s.productHistory||[]),e]}));
-  const saveSettings=({profile,anchor,products})=>setState(s=>({...s,profile,anchor,products}));
+  const washed=()=>setState(s=>({...s,anchor:todayKey(),skipped:(s.skipped||[]).filter(d=>d!==todayKey())}));
+  const skip=()=>setState(s=>({...s,skipped:[...(s.skipped||[]).filter(d=>d!==todayKey()),todayKey()]}));
+  const saveSettings=({anchor,colorDates})=>setState(s=>({...s,anchor,colorDates}));
+  const saveShelf=products=>setState(s=>({...s,products}));
+  const saveProfile=profile=>setState(s=>({...s,profile,anchor:s.anchor||todayKey()}));
 
-  if(screen==="loading") return React.createElement("div",{style:{minHeight:"100dvh",background:"#f8f7f4"}});
-
-  if(screen==="settings") return React.createElement(Settings,{state,onSave:saveSettings,onBack:()=>setScreen("home")});
-
-  if(screen==="routine") return React.createElement(RoutineDetail,{
-    state, dispatch:toggle, dateKey:routineDate,
-    onBack:()=>setScreen("home"),
-    onNavDay:dir=>setRoutineDate(d=>addDays(d,dir)),
-  });
-
-  return React.createElement(React.Fragment, null,
-    React.createElement(Home,{
-      state,
-      onViewRoutine:dk=>{setRoutineDate(dk||todayKey());setScreen("routine");},
-      onMarkWashedToday:markWashedToday,
-      onOpenProducts:()=>setShowProducts(true),
-      onSettings:()=>setScreen("settings"),
-    }),
-    React.createElement(ProductSheet,{
-      open:showProducts, onClose:()=>setShowProducts(false),
-      profile:state.profile, onAdd:addProduct,
-      history:state.productHistory||[], onHistoryAction:addHistory,
-    })
+  if(screen==="loading")return<div style={{minHeight:"100dvh",background:"var(--bg)"}}/>;
+  if(screen==="quiz")return<Quiz onDone={p=>{saveProfile(p);setScreen("home")}}/>;
+  if(screen==="settings")return(
+    <SettingsScreen state={state} onSave={saveSettings} onBack={()=>setScreen("home")} onResetQuiz={()=>setScreen("quiz")}/>
+  );
+  if(screen==="routine")return(
+    <>
+      <Routine state={state} dispatch={dispatch} dateKey={routineDate}
+        onBack={()=>setScreen("home")} onNavDay={dir=>setRoutineDate(d=>addDays(d,dir))}/>
+      <ShelfSheet open={shelf} onClose={()=>setShelf(false)} products={state.products} onSave={saveShelf}/>
+    </>
+  );
+  return(
+    <>
+      <Home state={state}
+        onRoutine={dk=>{setRoutineDate(dk||todayKey());setScreen("routine")}}
+        onWashed={washed} onSkip={skip}
+        onSettings={()=>setScreen("settings")}
+        onShelf={()=>setShelf(true)}/>
+      <ShelfSheet open={shelf} onClose={()=>setShelf(false)} products={state.products} onSave={saveShelf}/>
+    </>
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
 </script>
 </body>
 </html>
