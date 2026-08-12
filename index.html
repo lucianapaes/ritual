@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Cabelo">
+<meta name="theme-color" content="#f8f7f4">
+<title>Rotina Capilar</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body, #root { height: 100%; }
+  body { background: #f8f7f4; font-family: system-ui, -apple-system, sans-serif; overscroll-behavior-y: none; }
+  input[type=date] { -webkit-appearance: none; appearance: none; }
+  ::-webkit-scrollbar { display: none; }
+  @keyframes breathe { 0%,100%{transform:scale(1);opacity:.75} 50%{transform:scale(1.08) translateY(-1.5%);opacity:1} }
+  @keyframes drift   { 0%{transform:translate(-4%,0) rotate(0deg)} 50%{transform:translate(4%,-3%) rotate(4deg)} 100%{transform:translate(-4%,0) rotate(0deg)} }
+  @keyframes rise    { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
+  @keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+/* ── tokens ─────────────────────────────────────────── */
+const FD = "'Georgia', ui-serif, serif";
+const FS = "system-ui, -apple-system, sans-serif";
+const LAYERS = {
+  wash:  { base:"oklch(0.30 0.085 170)", blobs:["oklch(0.46 0.12 176/.6)","oklch(0.58 0.10 190/.4)"] },
+  rest:  { base:"oklch(0.88 0.055 82)",  blobs:["oklch(0.80 0.10 76/.6)","oklch(0.93 0.05 92/.7)"] },
+  color: { base:"oklch(0.29 0.13 20)",   blobs:["oklch(0.42 0.17 16/.6)","oklch(0.34 0.10 350/.5)"] },
+};
+const STROKE = { wash:"#2d6a4f", rest:"#b45309", color:"#9b3a3a" };
+const DOT    = { wash:"#3a9e7a", rest:"#c4a44a", color:"#9b3a3a" };
+
+/* ── schedule ────────────────────────────────────────── */
+const toKey   = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const fromKey = k => { const [y,m,d]=k.split("-").map(Number); return new Date(y,(m??1)-1,d??1); };
+const todayKey= () => toKey(new Date());
+const addDays = (k,n) => { const d=fromKey(k); d.setDate(d.getDate()+n); return toKey(d); };
+const diffDays= (a,b) => Math.round((fromKey(b)-fromKey(a))/86400000);
+
+function getDayType(dateKey, anchor, profile) {
+  if (profile?.hasColor && profile.lastColorDate && profile.colorFreq) {
+    const freq = Math.max(7, profile.colorFreq);
+    const diff = diffDays(profile.lastColorDate, dateKey);
+    if (diff > 0 && diff % freq === 0) return "color";
+  }
+  if (!anchor) return "wash";
+  const diff = diffDays(anchor, dateKey);
+  return (((diff % 2) + 2) % 2) === 0 ? "wash" : "rest";
+}
+function isPreColorDay(dateKey, anchor, profile) {
+  return getDayType(addDays(dateKey,1), anchor, profile) === "color";
+}
+function getFocus(dateKey, anchor) {
+  if (!anchor) return "reconstrucao";
+  const diff = diffDays(anchor, dateKey);
+  return Math.floor((((diff % 14)+14)%14)/7) === 0 ? "reconstrucao" : "hidratacao";
+}
+
+const DAY_LABEL = { wash:"Hoje é lavagem", rest:"Hoje é descanso", color:"Hoje é coloração" };
+const DAY_SUB   = {
+  wash:  "Ciclo completo de limpeza e tratamento.",
+  rest:  "Sem lavagem. Cuidado leve e proteção.",
+  color: "Dia de coloração — cabelo vai sujo. Sem lavagem.",
+};
+const FOCUS_INSIGHT = {
+  reconstrucao: "Semana de reconstrução — máscara de proteína para devolver força aos fios porosos e coloridos.",
+  hidratacao:   "Semana de hidratação — umectação e emolientes, sem sobrecarga proteica.",
+};
+
+/* ── steps ───────────────────────────────────────────── */
+const PHASE_LABEL = { banho:"No banho", "pos-banho":"Pós-banho", noite:"Ritual da noite" };
+
+function buildSteps(type, focus, products=[]) {
+  const RECO = [
+    { id:"w1", title:"Shampoo Kérastase Gloss Absolu",    detail:"Molhe bem antes. Aplique só no couro cabeludo.", phase:"banho" },
+    { id:"w2", title:"Elseve Bond Repair (bond builder)", detail:"Pré-shampoo de reconstrução — aplica, aguarda e lava.", phase:"banho", minutes:5 },
+    { id:"w3", title:"Máscara Redken Acidic Bonding",     detail:"Mecha a mecha nos comprimentos. Não aplica na raiz.", phase:"banho", minutes:10 },
+    { id:"w4", title:"Pentear com produto no fio",        detail:"Pente de dente largo — nunca pente o fio seco.", phase:"banho" },
+    { id:"w5", title:"Enxague frio final",                detail:"Fecha cutícula mecanicamente.", phase:"banho", minutes:1 },
+    { id:"w6", title:"Protetor térmico nos fios úmidos",  detail:"Antes de qualquer finalização, mesmo sem usar calor.", phase:"pos-banho" },
+    { id:"w7", title:"Leave-in + óleo leve",              detail:"1 pump leave-in + 2–3 gotas óleo leve — do meio às pontas.", phase:"pos-banho" },
+    { id:"w8", title:"Óleo pesado (opcional)",            detail:"Só se o fio estiver muito ressecado — apenas nas pontas.", phase:"pos-banho" },
+  ];
+  const HIDRO = [
+    { id:"w1", title:"Shampoo Kérastase Gloss Absolu",    detail:"Molhe bem antes. Aplique só no couro cabeludo.", phase:"banho" },
+    { id:"w2", title:"Acidificante Kérastase",            detail:"Após shampoo — quelante e fecha cutícula.", phase:"banho", minutes:3 },
+    { id:"w3", title:"Máscara Joico — hidratação",        detail:"Fio rígido ou sem elasticidade pede hidratação.", phase:"banho", minutes:5 },
+    { id:"w4", title:"Pentear com produto no fio",        detail:"Pente de dente largo — nunca pente o fio seco.", phase:"banho" },
+    { id:"w5", title:"Enxague frio final",                detail:"Fecha cutícula mecanicamente.", phase:"banho", minutes:1 },
+    { id:"w6", title:"Protetor térmico nos fios úmidos",  detail:"Antes de qualquer finalização, mesmo sem usar calor.", phase:"pos-banho" },
+    { id:"w7", title:"Leave-in + óleo leve",              detail:"1 pump leave-in + 2–3 gotas óleo leve — do meio às pontas.", phase:"pos-banho" },
+    { id:"w8", title:"Óleo pesado (opcional)",            detail:"Só se o fio estiver muito ressecado — apenas nas pontas.", phase:"pos-banho" },
+  ];
+  const REST = [
+    { id:"r1", title:"Óleo leve (Pantene) nas pontas",    detail:"Aplica se o fio estiver ressecado ao longo do dia.", phase:"pos-banho" },
+    { id:"r2", title:"Leave-in sem lavagem (opcional)",   detail:"Só se estiver com frizz ou muito seco.", phase:"pos-banho" },
+  ];
+  const COLOR = [
+    { id:"c1", title:"Cabelo vai sujo",                   detail:"A oleosidade natural protege o couro durante o processo. Não lave.", phase:"banho" },
+    { id:"c2", title:"Fronha de seda esta noite",         detail:"Menos atrito = menos desbotamento na primeira noite.", phase:"noite" },
+  ];
+  const NIGHT = { id:"n1", title:"Sérum Redken Acidic Bonding Night & Day", detail:"Fios secos antes de dormir, sem enxaguar.", phase:"noite" };
+  const base  = type==="color" ? COLOR : type==="rest" ? REST : focus==="reconstrucao" ? RECO : HIDRO;
+  const extras = products.map(p=>({ id:`p-${p.id}`, title:p.name, detail:p.note||p.frequency||"", phase:p.phase }));
+  return [...base, ...extras, NIGHT];
+}
+
+/* ── default profile ─────────────────────────────────── */
+const DEFAULT_PROFILE = {
+  hasColor: true,
+  lastColorDate: (() => { const d=new Date(); d.setDate(d.getDate()-3); return toKey(d); })(),
+  colorFreq: 28,
+};
+const DEFAULT_ANCHOR = addDays(todayKey(), -1);
+
+/* ── storage ─────────────────────────────────────────── */
+const STORE_KEY = "rotina-capilar-v4";
+const EMPTY = { profile:DEFAULT_PROFILE, anchor:DEFAULT_ANCHOR, products:[], progress:{}, productHistory:[] };
+const loadState = () => {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return EMPTY;
+    const p = JSON.parse(raw);
+    return { ...EMPTY, ...p, profile:{ ...DEFAULT_PROFILE, ...(p.profile||{}) } };
+  } catch { return EMPTY; }
+};
+const saveState = s => { try { localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch {} };
+
+/* ── Claude API ──────────────────────────────────────── */
+async function analyzeProduct(query, profile) {
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({
+      model:"claude-sonnet-4-6", max_tokens:1000,
+      messages:[{ role:"user", content:`Especialista em cosmética capilar. Analise o produto e responda APENAS em JSON válido sem markdown.
+
+Produto: "${query}"
+Perfil: cabelo com coloração mensal (${profile?.colorFreq||28} dias), porosidade genética alta, vegetariana.
+
+JSON exato:
+{"name":"nome comercial","brand":"marca","category":"categoria","summary":"o que é em 1 frase","verdict":"adequado|com ressalva|não recomendado","verdictReason":"motivo em 1-2 frases","phase":"banho|pos-banho|noite","frequency":"frequência de uso","note":"instrução de uso em 1 frase"}` }]
+    })
+  });
+  const data = await res.json();
+  const text = data.content?.find(b=>b.type==="text")?.text||"{}";
+  try { return JSON.parse(text.replace(/```json|```/g,"")); } catch { return null; }
+}
+
+/* ══ COMPONENTS ══════════════════════════════════════════ */
+
+function HeroTexture({ type }) {
+  const l = LAYERS[type];
+  return (
+    <div style={{position:"absolute",inset:0,overflow:"hidden",backgroundColor:l.base}}>
+      <div style={{position:"absolute",left:"-20%",top:"-15%",height:"70%",width:"90%",borderRadius:"50%",filter:"blur(80px)",backgroundColor:l.blobs[0],animation:"breathe 9s ease-in-out infinite"}}/>
+      <div style={{position:"absolute",right:"-25%",bottom:"-20%",height:"75%",width:"95%",borderRadius:"50%",filter:"blur(80px)",backgroundColor:l.blobs[1],animation:"drift 22s ease-in-out infinite"}}/>
+      <div style={{position:"absolute",inset:0,opacity:.12,mixBlendMode:"overlay",backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")`}}/>
+    </div>
+  );
+}
+
+function ProgressRing({ value, total, size=52, stroke=3 }) {
+  const r=(size-stroke)/2,c=2*Math.PI*r,pct=total>0?Math.min(1,value/total):0;
+  return (
+    <div style={{position:"relative",width:size,height:size}}>
+      <svg width={size} height={size} style={{transform:"rotate(-90deg)"}}>
+        <circle cx={size/2} cy={size/2} r={r} fill="none" strokeWidth={stroke} stroke="rgba(255,255,255,0.25)"/>
+        <circle cx={size/2} cy={size/2} r={r} fill="none" strokeWidth={stroke} strokeLinecap="round"
+          stroke="white" strokeDasharray={c} strokeDashoffset={c*(1-pct)} style={{transition:"stroke-dashoffset .7s ease-out"}}/>
+      </svg>
+      <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,color:"white",fontVariantNumeric:"tabular-nums"}}>{value}/{total}</div>
+    </div>
+  );
+}
+
+function TimerSheet({ open, title, minutes, type, onClose }) {
+  const total=minutes*60;
+  const [left,setLeft]=useState(total);
+  const [running,setRunning]=useState(false);
+  const [done,setDone]=useState(false);
+  useEffect(()=>{ if(!open) return; setLeft(total); setRunning(false); setDone(false); },[open,total]);
+  useEffect(()=>{
+    if(!open||!running) return;
+    const id=setInterval(()=>setLeft(v=>{
+      if(v<=1){ clearInterval(id); setRunning(false); setDone(true); navigator.vibrate?.([120,60,200]); return 0; }
+      return v-1;
+    }),1000);
+    return ()=>clearInterval(id);
+  },[open,running]);
+  if(!open) return null;
+  const sz=200,r=(sz-8)/2,circ=2*Math.PI*r,pct=total>0?left/total:0;
+  const mm=Math.floor(left/60),ss=String(left%60).padStart(2,"0");
+  const stroke=STROKE[type]||"#2d6a4f";
+  return (
+    <div style={{position:"fixed",inset:0,zIndex:50,display:"flex",alignItems:"flex-end"}}>
+      <div onClick={onClose} style={{position:"absolute",inset:0,background:"rgba(26,25,23,.5)",backdropFilter:"blur(2px)"}}/>
+      <div style={{position:"relative",width:"100%",borderRadius:"28px 28px 0 0",background:"#faf9f6",borderTop:"1px solid #e2dfd8",padding:"16px 24px 44px",animation:"rise .35s cubic-bezier(.22,1,.36,1) both"}}>
+        <div style={{width:40,height:4,borderRadius:2,background:"#e2dfd8",margin:"0 auto 20px"}}/>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:20}}>
+          <div>
+            <div style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",marginBottom:4}}>Temporizador</div>
+            <div style={{fontSize:20,fontFamily:FD,lineHeight:1.1}}>{title}</div>
+          </div>
+          <button onClick={onClose} style={{border:"1px solid #e2dfd8",borderRadius:"50%",width:34,height:34,display:"flex",alignItems:"center",justifyContent:"center",background:"none",cursor:"pointer",color:"#8a8780",fontSize:16}}>×</button>
+        </div>
+        <div style={{position:"relative",width:sz,height:sz,margin:"0 auto 24px"}}>
+          <svg width={sz} height={sz} style={{transform:"rotate(-90deg)"}}>
+            <circle cx={sz/2} cy={sz/2} r={r} fill="none" strokeWidth={6} stroke="#e2dfd8"/>
+            <circle cx={sz/2} cy={sz/2} r={r} fill="none" strokeWidth={6} strokeLinecap="round"
+              stroke={stroke} strokeDasharray={circ} strokeDashoffset={circ*(1-pct)} style={{transition:"stroke-dashoffset 1s linear"}}/>
+          </svg>
+          <div style={{position:"absolute",inset:0,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
+            <span style={{fontFamily:FD,fontSize:48,letterSpacing:"-.03em",fontVariantNumeric:"tabular-nums"}}>{mm}:{ss}</span>
+            <span style={{fontSize:12,color:"#8a8780",marginTop:4}}>{done?"Concluído":running?"em andamento":"pausado"}</span>
+          </div>
+        </div>
+        <div style={{display:"flex",gap:10}}>
+          <button onClick={()=>done?onClose():setRunning(r=>!r)}
+            style={{flex:1,padding:"13px 0",borderRadius:40,border:"none",cursor:"pointer",fontSize:14,background:stroke,color:"white"}}>
+            {done?"Pronto":running?"⏸ Pausar":"▶ Iniciar"}
+          </button>
+          <button onClick={onClose} style={{padding:"13px 18px",borderRadius:40,border:"1px solid #e2dfd8",background:"none",cursor:"pointer",fontSize:14,color:"#8a8780"}}>Fechar</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Settings ────────────────────────────────────────── */
+function Settings({ state, onSave, onBack }) {
+  const p = state.profile||DEFAULT_PROFILE;
+  const [hasColor,setHasColor]=useState(p.hasColor);
+  const [lastColor,setLastColor]=useState(p.lastColorDate||todayKey());
+  const [freq,setFreq]=useState(p.colorFreq||28);
+  const [anchor,setAnchor]=useState(state.anchor||DEFAULT_ANCHOR);
+  const [products,setProducts]=useState(state.products||[]);
+
+  const Pill=({active,onClick,children})=>(
+    <button onClick={onClick} style={{padding:"9px 18px",borderRadius:40,border:`1px solid ${active?"#2d6a4f":"#e2dfd8"}`,background:active?"#e8f5ee":"white",color:active?"#1b4332":"#1a1917",cursor:"pointer",fontSize:14,transition:"all .15s"}}>{children}</button>
+  );
+  const Row=({label,children})=>(
+    <div style={{marginBottom:20}}>
+      <label style={{fontSize:13,color:"#8a8780",display:"block",marginBottom:8}}>{label}</label>
+      {children}
+    </div>
+  );
+
+  return (
+    <div style={{minHeight:"100dvh",background:"#f8f7f4",fontFamily:FS,paddingBottom:40}}>
+      <header style={{display:"flex",alignItems:"center",gap:12,padding:"16px 20px",borderBottom:"1px solid #e2dfd8",background:"rgba(248,247,244,.95)",position:"sticky",top:0,zIndex:10,backdropFilter:"blur(8px)"}}>
+        <button onClick={onBack} style={{background:"none",border:"none",cursor:"pointer",color:"#8a8780",fontSize:20}}>←</button>
+        <span style={{fontFamily:FD,fontSize:20}}>Configurações</span>
+        <button onClick={()=>{ onSave({profile:{hasColor,lastColorDate:hasColor?lastColor:null,colorFreq:hasColor?freq:null},anchor,products}); onBack(); }}
+          style={{marginLeft:"auto",padding:"8px 18px",borderRadius:40,background:"#1a1917",color:"white",border:"none",cursor:"pointer",fontSize:13}}>Salvar</button>
+      </header>
+      <div style={{padding:"24px"}}>
+        <section style={{marginBottom:32}}>
+          <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",marginBottom:6}}>Ciclo de lavagem</p>
+          <h3 style={{fontFamily:FD,fontSize:22,marginBottom:8}}>Última lavagem</h3>
+          <p style={{fontSize:13,color:"#8a8780",marginBottom:14,lineHeight:1.5}}>Âncora do ciclo dia sim, dia não. Se lavar fora da sequência, use "lavei hoje" na tela principal.</p>
+          <input type="date" value={anchor} onChange={e=>setAnchor(e.target.value)}
+            style={{width:"100%",padding:"13px 14px",borderRadius:12,border:"1px solid #e2dfd8",fontSize:15,background:"white",color:"#1a1917"}}/>
+        </section>
+
+        <section style={{marginBottom:32}}>
+          <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",marginBottom:6}}>Coloração</p>
+          <h3 style={{fontFamily:FD,fontSize:22,marginBottom:14}}>Você faz coloração?</h3>
+          <div style={{display:"flex",gap:10,marginBottom:20}}>
+            <Pill active={hasColor} onClick={()=>setHasColor(true)}>Sim</Pill>
+            <Pill active={!hasColor} onClick={()=>setHasColor(false)}>Não</Pill>
+          </div>
+          {hasColor&&<>
+            <Row label="Última coloração">
+              <input type="date" value={lastColor} onChange={e=>setLastColor(e.target.value)}
+                style={{width:"100%",padding:"13px 14px",borderRadius:12,border:"1px solid #e2dfd8",fontSize:15,background:"white",color:"#1a1917"}}/>
+            </Row>
+            <Row label="Frequência de retoque">
+              <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+                {[21,28,35,42].map(f=><Pill key={f} active={freq===f} onClick={()=>setFreq(f)}>{f} dias</Pill>)}
+              </div>
+            </Row>
+          </>}
+        </section>
+
+        {products.length>0&&<section>
+          <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",marginBottom:6}}>Produtos na rotina</p>
+          <h3 style={{fontFamily:FD,fontSize:22,marginBottom:14}}>Adicionados por você</h3>
+          {products.map(p=>(
+            <div key={p.id} style={{display:"flex",alignItems:"center",gap:12,padding:"12px 0",borderBottom:"1px solid #f0ede9"}}>
+              <div style={{flex:1}}>
+                <div style={{fontSize:14,color:"#1a1917"}}>{p.name}</div>
+                <div style={{fontSize:12,color:"#8a8780",marginTop:2}}>{PHASE_LABEL[p.phase]||p.phase} · {p.frequency}</div>
+              </div>
+              <button onClick={()=>setProducts(ps=>ps.filter(x=>x.id!==p.id))}
+                style={{padding:"6px 12px",borderRadius:20,border:"1px solid #fecaca",background:"#fee2e2",color:"#9b3a3a",fontSize:12,cursor:"pointer"}}>remover</button>
+            </div>
+          ))}
+        </section>}
+      </div>
+    </div>
+  );
+}
+
+/* ── Product Sheet ───────────────────────────────────── */
+function ProductSheet({ open, onClose, profile, onAdd, history, onHistoryAction }) {
+  const [query,setQuery]=useState("");
+  const [loading,setLoading]=useState(false);
+  const [result,setResult]=useState(null);
+  const [error,setError]=useState("");
+  const [tab,setTab]=useState("search");
+
+  const search = async () => {
+    if(!query.trim()) return;
+    setLoading(true); setError(""); setResult(null);
+    try {
+      const r = await analyzeProduct(query.trim(), profile);
+      if(!r||!r.name) setError("Não consegui identificar. Tente um nome mais específico.");
+      else { setResult(r); onHistoryAction({type:"searched",product:r,query:query.trim(),at:new Date().toISOString()}); }
+    } catch { setError("Erro na busca. Tente novamente."); }
+    setLoading(false);
+  };
+
+  const handleAdd = () => { onAdd(result); onHistoryAction({type:"added",product:result,at:new Date().toISOString()}); setResult(null); setQuery(""); onClose(); };
+  const handleSkip= () => { onHistoryAction({type:"skipped",product:result,at:new Date().toISOString()}); setResult(null); setQuery(""); };
+
+  if(!open) return null;
+  const VBG={ adequado:"#e8f5ee","com ressalva":"#fef3c7","não recomendado":"#fee2e2" };
+  const VCL={ adequado:"#2d6a4f","com ressalva":"#92400e","não recomendado":"#9b3a3a" };
+
+  return (
+    <div style={{position:"fixed",inset:0,zIndex:50,display:"flex",alignItems:"flex-end"}}>
+      <div onClick={onClose} style={{position:"absolute",inset:0,background:"rgba(26,25,23,.5)",backdropFilter:"blur(2px)"}}/>
+      <div style={{position:"relative",width:"100%",maxHeight:"92dvh",overflowY:"auto",borderRadius:"28px 28px 0 0",background:"#faf9f6",borderTop:"1px solid #e2dfd8",padding:"16px 24px 44px",animation:"rise .35s cubic-bezier(.22,1,.36,1) both"}}>
+        <div style={{width:40,height:4,borderRadius:2,background:"#e2dfd8",margin:"0 auto 16px"}}/>
+        <div style={{display:"flex",borderBottom:"1px solid #e2dfd8",marginBottom:20}}>
+          {[["search","Buscar"],["history",`Histórico${history.length?` (${history.length})`:""}`]].map(([t,l])=>(
+            <button key={t} onClick={()=>setTab(t)} style={{flex:1,padding:"10px 0",background:"none",border:"none",borderBottom:`2px solid ${tab===t?"#1a1917":"transparent"}`,cursor:"pointer",fontSize:13,fontWeight:tab===t?600:400,color:tab===t?"#1a1917":"#8a8780"}}>{l}</button>
+          ))}
+        </div>
+
+        {tab==="search"&&<>
+          <h2 style={{fontFamily:FD,fontSize:26,lineHeight:1,letterSpacing:"-.02em",marginBottom:16}}>Estou usando…</h2>
+          <div style={{display:"flex",gap:8,marginBottom:8}}>
+            <input value={query} onChange={e=>setQuery(e.target.value)} onKeyDown={e=>e.key==="Enter"&&search()}
+              placeholder="ex: Redken All Soft Mega Mask"
+              style={{flex:1,padding:"12px 14px",borderRadius:12,border:"1px solid #e2dfd8",fontSize:15,background:"white",color:"#1a1917",outline:"none"}}/>
+            <button onClick={search} disabled={loading||!query.trim()}
+              style={{padding:"12px 18px",borderRadius:12,background:"#1a1917",color:"white",border:"none",cursor:loading||!query.trim()?"not-allowed":"pointer",fontSize:15,opacity:loading||!query.trim()?.55:1}}>
+              {loading?"…":"→"}
+            </button>
+          </div>
+          {error&&<div style={{padding:"12px 14px",borderRadius:12,background:"#fee2e2",color:"#9b3a3a",fontSize:13,marginTop:12}}>{error}</div>}
+          {result&&<div style={{marginTop:16,animation:"fadeIn .3s ease"}}>
+            <div style={{background:"white",borderRadius:16,border:"1px solid #e2dfd8",padding:18,marginBottom:12}}>
+              <div style={{fontSize:11,letterSpacing:".15em",textTransform:"uppercase",color:"#8a8780",marginBottom:4}}>{result.brand} · {result.category}</div>
+              <div style={{fontFamily:FD,fontSize:21,lineHeight:1.1,marginBottom:8}}>{result.name}</div>
+              <p style={{fontSize:14,color:"#5a5855",lineHeight:1.5,marginBottom:14}}>{result.summary}</p>
+              <div style={{padding:"10px 14px",borderRadius:10,background:VBG[result.verdict]||"#f0ede9",marginBottom:12}}>
+                <div style={{fontSize:11,fontWeight:600,color:VCL[result.verdict]||"#1a1917",marginBottom:3,textTransform:"uppercase",letterSpacing:".1em"}}>{result.verdict}</div>
+                <div style={{fontSize:13,color:"#5a5855",lineHeight:1.5}}>{result.verdictReason}</div>
+              </div>
+              <div style={{display:"flex",gap:14,fontSize:12,color:"#8a8780",marginBottom:result.note?10:0}}>
+                <span>📍 <strong style={{color:"#1a1917"}}>{PHASE_LABEL[result.phase]||result.phase}</strong></span>
+                <span>🔄 {result.frequency}</span>
+              </div>
+              {result.note&&<p style={{fontSize:13,color:"#5a5855",lineHeight:1.5,borderTop:"1px solid #f0ede9",paddingTop:10}}>{result.note}</p>}
+            </div>
+            <div style={{display:"flex",gap:10}}>
+              <button onClick={handleAdd} style={{flex:1,padding:"13px 0",borderRadius:40,background:"#1a1917",color:"white",border:"none",cursor:"pointer",fontSize:14}}>+ Adicionar à rotina</button>
+              <button onClick={handleSkip} style={{padding:"13px 16px",borderRadius:40,border:"1px solid #e2dfd8",background:"none",cursor:"pointer",fontSize:14,color:"#8a8780"}}>Ignorar</button>
+            </div>
+          </div>}
+        </>}
+
+        {tab==="history"&&<>
+          {history.length===0
+            ?<div style={{textAlign:"center",padding:"40px 0",color:"#8a8780",fontSize:14}}>Nenhum produto pesquisado ainda.</div>
+            :history.slice().reverse().map((h,i)=>(
+              <div key={i} style={{padding:"14px 0",borderBottom:"1px solid #f0ede9"}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:8}}>
+                  <div style={{flex:1}}>
+                    <div style={{fontSize:14,fontFamily:FD,color:"#1a1917"}}>{h.product.name}</div>
+                    <div style={{fontSize:12,color:"#8a8780",marginTop:2}}>{h.product.brand} · {new Date(h.at).toLocaleDateString("pt-BR")}</div>
+                    <div style={{marginTop:6,display:"flex",gap:8,flexWrap:"wrap"}}>
+                      <span style={{fontSize:11,fontWeight:600,padding:"2px 8px",borderRadius:20,background:VBG[h.product.verdict]||"#f0ede9",color:VCL[h.product.verdict]||"#1a1917"}}>{h.product.verdict}</span>
+                      <span style={{fontSize:11,color:"#8a8780"}}>{h.type==="added"?"✓ na rotina":h.type==="skipped"?"ignorado":"pesquisado"}</span>
+                    </div>
+                  </div>
+                  {h.type!=="added"&&<button onClick={()=>{setResult(h.product);setTab("search");}}
+                    style={{padding:"6px 12px",borderRadius:20,border:"1px solid #e2dfd8",background:"none",cursor:"pointer",fontSize:12,color:"#8a8780",flexShrink:0}}>ver</button>}
+                </div>
+              </div>
+            ))
+          }
+        </>}
+      </div>
+    </div>
+  );
+}
+
+/* ── Home ────────────────────────────────────────────── */
+function Home({ state, onViewRoutine, onMarkWashedToday, onOpenProducts, onSettings }) {
+  const today=todayKey();
+  const type=getDayType(today,state.anchor,state.profile);
+  const focus=getFocus(today,state.anchor);
+  const steps=buildSteps(type,focus,state.products);
+  const doneToday=(state.progress[today]||[]).filter(id=>steps.some(s=>s.id===id)).length;
+  const light=type==="rest";
+  const preColor=isPreColorDay(today,state.anchor,state.profile);
+  const days=Array.from({length:14},(_,i)=>{const k=addDays(today,i);return{key:k,date:fromKey(k),type:getDayType(k,state.anchor,state.profile)};});
+
+  return (
+    <div style={{minHeight:"100dvh",background:"#f8f7f4",fontFamily:FS}}>
+      <section style={{position:"relative",minHeight:"72dvh",overflow:"hidden"}}>
+        <HeroTexture type={type}/>
+        <div style={{position:"relative",minHeight:"72dvh",display:"flex",flexDirection:"column",padding:"24px 24px 40px",color:light?"#1a1917":"white"}}>
+          <header style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <span style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",opacity:.7}}>Rotina Capilar</span>
+            <div style={{display:"flex",alignItems:"center",gap:10}}>
+              <button onClick={onOpenProducts} style={{background:"none",border:"1px solid rgba(255,255,255,.35)",borderRadius:40,padding:"6px 12px",cursor:"pointer",color:"inherit",fontSize:12}}>+ produto</button>
+              <button onClick={onSettings} style={{background:"none",border:"1px solid rgba(255,255,255,.35)",borderRadius:"50%",width:34,height:34,cursor:"pointer",color:"inherit",fontSize:16,display:"flex",alignItems:"center",justifyContent:"center"}}>⚙</button>
+              <ProgressRing value={doneToday} total={steps.length}/>
+            </div>
+          </header>
+          <div style={{marginTop:"auto"}}>
+            {preColor&&<div style={{display:"inline-flex",alignItems:"center",gap:6,background:"rgba(0,0,0,.28)",borderRadius:20,padding:"6px 14px",marginBottom:16,fontSize:13,backdropFilter:"blur(4px)"}}>
+              ⚠️ amanhã é coloração — use o acidificante hoje no fim do banho
+            </div>}
+            <p style={{fontSize:14,opacity:.75}}>{new Date().toLocaleDateString("pt-BR",{weekday:"long",day:"2-digit",month:"long"})}</p>
+            <h1 style={{fontFamily:FD,fontSize:"clamp(2.4rem,11vw,3.4rem)",lineHeight:.98,letterSpacing:"-.035em",margin:"12px 0 16px"}}>{DAY_LABEL[type]}</h1>
+            <p style={{fontSize:15,opacity:.8,maxWidth:320,lineHeight:1.5}}>{DAY_SUB[type]}</p>
+            <div style={{display:"flex",gap:12,marginTop:28,flexWrap:"wrap",alignItems:"center"}}>
+              <button onClick={()=>onViewRoutine(today)} style={{background:"none",border:"none",borderBottom:"1px solid currentColor",paddingBottom:4,cursor:"pointer",fontSize:14,color:"inherit",opacity:.9}}>Ver rotina →</button>
+              <button onClick={onMarkWashedToday} style={{background:"rgba(255,255,255,.15)",border:"1px solid rgba(255,255,255,.3)",borderRadius:40,padding:"6px 14px",cursor:"pointer",fontSize:13,color:"inherit",backdropFilter:"blur(4px)"}}>✓ lavei hoje</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section style={{padding:"24px 24px 0"}}>
+        <div style={{borderRadius:20,border:"1px solid #e2dfd8",background:"white",padding:22}}>
+          <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",marginBottom:10}}>Insight da semana</p>
+          <p style={{fontSize:16,lineHeight:1.5,color:"#1a1917"}}>{FOCUS_INSIGHT[focus]}</p>
+        </div>
+      </section>
+
+      <section style={{paddingTop:24}}>
+        <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",padding:"0 24px",marginBottom:14}}>Próximos 14 dias</p>
+        <div style={{display:"flex",gap:8,overflowX:"auto",padding:"0 24px 8px"}}>
+          {days.map((d,i)=>(
+            <button key={d.key} onClick={()=>onViewRoutine(d.key)}
+              style={{flexShrink:0,display:"flex",flexDirection:"column",alignItems:"center",gap:8,minWidth:58,padding:"14px 10px",borderRadius:20,border:`1px solid ${i===0?"#1a1917":"#e2dfd8"}`,background:i===0?"#f0ede9":"white",cursor:"pointer"}}>
+              <span style={{fontSize:10,textTransform:"uppercase",letterSpacing:".12em",color:"#8a8780"}}>{d.date.toLocaleDateString("pt-BR",{weekday:"short"}).slice(0,3)}</span>
+              <span style={{fontFamily:FD,fontSize:20,color:"#1a1917"}}>{d.date.getDate()}</span>
+              <span style={{width:20,height:5,borderRadius:3,background:DOT[d.type]}}/>
+            </button>
+          ))}
+        </div>
+        <div style={{display:"flex",gap:20,padding:"10px 24px",fontSize:12,color:"#8a8780"}}>
+          {[["wash","lavagem"],["color","coloração"],["rest","descanso"]].map(([t,l])=>(
+            <span key={t} style={{display:"inline-flex",alignItems:"center",gap:6}}>
+              <span style={{display:"inline-block",width:14,height:5,borderRadius:3,background:DOT[t]}}/>{l}
+            </span>
+          ))}
+        </div>
+      </section>
+      <div style={{height:40}}/>
+    </div>
+  );
+}
+
+/* ── Routine Detail ──────────────────────────────────── */
+function RoutineDetail({ state, dispatch, dateKey, onBack, onNavDay }) {
+  const [timer,setTimer]=useState(null);
+  const type=getDayType(dateKey,state.anchor,state.profile);
+  const focus=getFocus(dateKey,state.anchor);
+  const steps=buildSteps(type,focus,state.products);
+  const doneIds=state.progress[dateKey]||[];
+  const done=doneIds.filter(id=>steps.some(s=>s.id===id)).length;
+  const isToday=dateKey===todayKey();
+  const preColor=isPreColorDay(dateKey,state.anchor,state.profile);
+  const stroke=STROKE[type]||"#2d6a4f";
+  const group=phase=>steps.filter(s=>s.phase===phase);
+
+  const renderStep=(s,night=false)=>{
+    const isDone=doneIds.includes(s.id);
+    return (
+      <div key={s.id} style={{display:"flex",gap:16,padding:"16px 0",borderBottom:night?"none":"1px solid #f0ede9",opacity:isDone?.42:1,transition:"opacity .2s"}}>
+        <button onClick={()=>dispatch({dateKey,id:s.id})}
+          style={{width:24,height:24,borderRadius:"50%",flexShrink:0,marginTop:2,cursor:"pointer",border:`1.5px solid ${isDone?(night?"rgba(255,255,255,.7)":stroke):"rgba(0,0,0,.18)"}`,background:"transparent",display:"flex",alignItems:"center",justifyContent:"center"}}>
+          {isDone&&<svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 5.5l2.5 2.5 4.5-4.5" stroke={night?"white":stroke} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+        </button>
+        <div style={{flex:1}}>
+          <p style={{fontSize:17,lineHeight:1.3,textDecoration:isDone?"line-through":"none",color:night?"inherit":"#1a1917",fontFamily:FD}}>{s.title}</p>
+          {s.detail&&<p style={{marginTop:4,fontSize:13,lineHeight:1.5,color:night?"rgba(255,255,255,.6)":"#8a8780"}}>{s.detail}</p>}
+          {s.minutes&&<button onClick={()=>setTimer(s)} style={{marginTop:10,display:"inline-flex",alignItems:"center",gap:6,padding:"6px 14px",borderRadius:40,border:`1px solid ${night?"rgba(255,255,255,.25)":"rgba(0,0,0,.12)"}`,background:"none",cursor:"pointer",fontSize:12,color:night?"rgba(255,255,255,.75)":stroke}}>⏱ {s.minutes} min</button>}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div style={{minHeight:"100dvh",background:"#f8f7f4",fontFamily:FS,paddingBottom:160}}>
+      <header style={{position:"sticky",top:0,zIndex:10,display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,borderBottom:"1px solid #e2dfd8",background:"rgba(248,247,244,.94)",backdropFilter:"blur(8px)",padding:"14px 20px"}}>
+        <button onClick={onBack} style={{background:"none",border:"none",cursor:"pointer",color:"#8a8780",fontSize:20}}>←</button>
+        <div style={{display:"flex",alignItems:"center",gap:12}}>
+          <button onClick={()=>onNavDay(-1)} style={{background:"none",border:"none",cursor:"pointer",color:"#8a8780",fontSize:20}}>‹</button>
+          <span style={{fontSize:14,minWidth:120,textAlign:"center",color:"#1a1917"}}>{isToday?"Hoje":fromKey(dateKey).toLocaleDateString("pt-BR",{weekday:"short",day:"2-digit",month:"short"})}</span>
+          <button onClick={()=>onNavDay(1)} style={{background:"none",border:"none",cursor:"pointer",color:"#8a8780",fontSize:20}}>›</button>
+        </div>
+        <span style={{fontSize:13,color:"#8a8780",fontVariantNumeric:"tabular-nums"}}>{done}/{steps.length}</span>
+      </header>
+
+      <div style={{padding:"28px 24px 0"}}>
+        <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",marginBottom:10}}>{focus==="reconstrucao"?"Semana de reconstrução":"Semana de hidratação"}</p>
+        <h1 style={{fontFamily:FD,fontSize:"clamp(2.2rem,10vw,3rem)",lineHeight:.98,letterSpacing:"-.03em"}}>{isToday?DAY_LABEL[type]:type==="wash"?"Dia de lavagem":type==="color"?"Dia de coloração":"Dia de descanso"}</h1>
+        <p style={{marginTop:10,fontSize:14,color:"#8a8780",lineHeight:1.5}}>{DAY_SUB[type]}</p>
+        <span style={{display:"inline-block",marginTop:14,height:5,width:48,borderRadius:3,background:DOT[type]}}/>
+      </div>
+
+      {preColor&&<div style={{margin:"16px 24px 0",padding:"14px 16px",borderRadius:14,background:"#fef3c7",border:"1px solid #fde68a",fontSize:13,color:"#92400e",lineHeight:1.5}}>
+        ⚠️ Amanhã é dia de coloração. Ao final deste banho aplique o <strong>Acidificante Kérastase</strong> — remove depósito mineral para a cor oxidar de forma uniforme.
+      </div>}
+      {type==="color"&&<div style={{margin:"16px 24px 0",padding:"14px 16px",borderRadius:14,background:"#fee2e2",border:"1px solid #fecaca",fontSize:13,color:"#9b3a3a",lineHeight:1.5}}>
+        🎨 Dia de coloração — sem lavagem. A oleosidade natural protege o couro durante o processo.
+      </div>}
+
+      <div style={{padding:"24px 24px 0"}}>
+        {["banho","pos-banho"].map(phase=>group(phase).length?(
+          <section key={phase} style={{marginBottom:28}}>
+            <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",color:"#8a8780",borderBottom:"1px solid #e2dfd8",paddingBottom:12,marginBottom:0}}>{PHASE_LABEL[phase]}</p>
+            {group(phase).map(s=>renderStep(s))}
+          </section>
+        ):null)}
+      </div>
+
+      <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:20,padding:"0 16px 16px"}}>
+        <div style={{borderRadius:20,background:"oklch(0.29 0.062 275)",padding:"16px 20px 20px",color:"white",boxShadow:"0 -4px 32px rgba(0,0,0,.2)"}}>
+          <p style={{fontSize:11,letterSpacing:".18em",textTransform:"uppercase",opacity:.6,marginBottom:4}}>{PHASE_LABEL.noite}</p>
+          {group("noite").map(s=>renderStep(s,true))}
+        </div>
+      </div>
+
+      <TimerSheet open={!!timer} title={timer?.title||""} minutes={timer?.minutes||1} type={type} onClose={()=>setTimer(null)}/>
+    </div>
+  );
+}
+
+/* ── App ─────────────────────────────────────────────── */
+function App() {
+  const [screen,setScreen]=useState("loading");
+  const [state,setState]=useState(EMPTY);
+  const [routineDate,setRoutineDate]=useState(todayKey());
+  const [showProducts,setShowProducts]=useState(false);
+
+  useEffect(()=>{ setState(loadState()); setScreen("home"); },[]);
+  useEffect(()=>{ if(screen!=="loading") saveState(state); },[state]);
+
+  const toggle=({dateKey,id})=>setState(s=>{
+    const done=s.progress[dateKey]||[];
+    const next=done.includes(id)?done.filter(i=>i!==id):[...done,id];
+    return {...s,progress:{...s.progress,[dateKey]:next}};
+  });
+
+  const markWashedToday=()=>setState(s=>({...s,anchor:todayKey()}));
+  const addProduct=p=>setState(s=>({...s,products:[...s.products,{...p,id:Math.random().toString(36).slice(2,9),addedAt:new Date().toISOString()}]}));
+  const addHistory=e=>setState(s=>({...s,productHistory:[...(s.productHistory||[]),e]}));
+  const saveSettings=({profile,anchor,products})=>setState(s=>({...s,profile,anchor,products}));
+
+  if(screen==="loading") return React.createElement("div",{style:{minHeight:"100dvh",background:"#f8f7f4"}});
+
+  if(screen==="settings") return React.createElement(Settings,{state,onSave:saveSettings,onBack:()=>setScreen("home")});
+
+  if(screen==="routine") return React.createElement(RoutineDetail,{
+    state, dispatch:toggle, dateKey:routineDate,
+    onBack:()=>setScreen("home"),
+    onNavDay:dir=>setRoutineDate(d=>addDays(d,dir)),
+  });
+
+  return React.createElement(React.Fragment, null,
+    React.createElement(Home,{
+      state,
+      onViewRoutine:dk=>{setRoutineDate(dk||todayKey());setScreen("routine");},
+      onMarkWashedToday:markWashedToday,
+      onOpenProducts:()=>setShowProducts(true),
+      onSettings:()=>setScreen("settings"),
+    }),
+    React.createElement(ProductSheet,{
+      open:showProducts, onClose:()=>setShowProducts(false),
+      profile:state.profile, onAdd:addProduct,
+      history:state.productHistory||[], onHistoryAction:addHistory,
+    })
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+</script>
+</body>
+</html>
