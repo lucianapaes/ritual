@@ -225,11 +225,14 @@ const FINISH_MODES={
 
 // which product IDs are eligible per finish slot
 const FINISH_SLOT_PRODUCTS={
-  protetor_escova: ["p22","p28","p17","p21"],  // Dream Coat, Nazca Ravor, N7, Absolut Sérum
-  final_escova:    ["p26","p29","p17","p13"],  // Sebastian Dark Oil, Sephora Cream, N7, Glaze Drops
+  // ESCOVA — protetor térmico e finalização não compartilham produtos
+  protetor_escova: ["p22","p28","p21"],        // Dream Coat, Nazca Ravor, Absolut Sérum
+  final_escova:    ["p26","p13","p16"],        // Sebastian Dark Oil, Glaze Drops, Lola Pinga
+  // DEFINIÇÃO — leave-in e definidor separados
   leavein:         ["p11","p10","p12","p25"],  // K18, Thérapiste, Absolut LI, Truss UO
-  definidor:       ["p30","p31","p32","p29"],  // Juba, Moroccanoil, ABC Curl, Sephora Cream
-  leavein_natural: ["p10","p11","p12","p25"],  // same as leavein but lighter intent
+  definidor:       ["p30","p31","p32"],        // Juba, Moroccanoil, ABC Curl
+  // NATURAL — leave-in leve e óleo separados
+  leavein_natural: ["p10","p12","p29","p25"],  // Thérapiste, Absolut LI, Sephora Cream, Truss UO
   oleo_leve:       ["p13","p16","p14","p17"],  // Glaze Drops, Lola, Non Oil, N7
 };
 const toKey=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
@@ -250,7 +253,7 @@ function getFocus(key,anchor){
 }
 
 const NIGHT={id:"n1",title:"Sérum noturno",detail:"Fios secos antes de dormir, sem enxaguar.",phase:"noite",slot:"noturno"};
-function buildSteps(type,focus,sel={},finishMode="natural"){
+function buildSteps(type,focus,sel={},finishMode=null){
   if(type==="recovery")return[
     {id:"r1",title:"Leave-in (opcional)",detail:"Só se houver frizz ou ressecamento excessivo.",phase:"pos",slot:"leavein"},
     {id:"r2",title:"Óleo nas pontas",detail:"Pontas ressecadas ao longo do dia.",phase:"pos",slot:"oleo_leve"},
@@ -260,7 +263,8 @@ function buildSteps(type,focus,sel={},finishMode="natural"){
     {id:"c2",title:"Evite proteína nas 48h",detail:"Pós-química, o fio precisa de hidratação — não de reconstrução.",phase:"noite"},
     NIGHT];
   const reco=focus==="reco";
-  return[
+  // passos do banho — sempre iguais
+  const banho=[
     {id:"w1",title:"Shampoo",detail:"Molhe bem antes. Aplique só no couro cabeludo.",phase:"banho",slot:"shampoo"},
     reco?{id:"w2",title:"Bond builder (pré-shampoo)",detail:"Aplica nos comprimentos secos, aguarda 5 min e lava.",phase:"banho",minutes:5}
        :{id:"w2",title:"Acidificante",detail:"Após shampoo — remove depósito mineral, fecha cutícula.",phase:"banho",minutes:3,slot:"acidificante"},
@@ -268,12 +272,16 @@ function buildSteps(type,focus,sel={},finishMode="natural"){
        :{id:"w3",title:"Máscara de hidratação",detail:"Semana de hidratação — umectantes e emolientes.",phase:"banho",minutes:5,slot:"mascara"},
     {id:"w4",title:"Pentear com produto no fio",detail:"Pente de dente largo — nunca pente o fio seco.",phase:"banho"},
     {id:"w5",title:"Enxague frio final",detail:"Fecha a cutícula mecanicamente.",phase:"banho",minutes:1},
-    {id:"w6",title:"Protetor térmico",detail:"Nos fios úmidos antes de qualquer finalização. Pode ser leave-in, sérum ou spray específico.",phase:"pos",slot:"protetor"},
-    {id:"w7",title:"Leave-in",detail:"Do meio às pontas, nos fios ainda úmidos.",phase:"pos",slot:"leavein"},
-    {id:"w8",title:"Óleo leve",detail:"2–3 gotas do meio às pontas após o leave-in.",phase:"pos",slot:"oleo_leve"},
-    {id:"w9",title:"Óleo pesado (opcional)",detail:"Só nas pontas se estiverem muito ressecadas após secar.",phase:"pos",slot:"oleo_pesado"},
-    ...(FINISH_MODES[finishMode]?.steps||[]),
-    NIGHT];
+  ];
+  // pós-banho — depende do modo de finalização escolhido
+  const pos = FINISH_MODES[finishMode]
+    ? FINISH_MODES[finishMode].steps
+    : [
+        {id:"w6",title:"Protetor térmico",detail:"Nos fios úmidos antes de qualquer finalização.",phase:"pos",slot:"protetor"},
+        {id:"w7",title:"Leave-in",detail:"Do meio às pontas, nos fios ainda úmidos.",phase:"pos",slot:"leavein"},
+        {id:"w8",title:"Óleo leve",detail:"2–3 gotas do meio às pontas após o leave-in.",phase:"pos",slot:"oleo_leve"},
+      ];
+  return [...banho, ...pos, NIGHT];
 }
 
 function buildStepsWithMode(type, focus, sel={}, finishMode="natural"){
@@ -828,7 +836,7 @@ function Home({state,onRoutine,onWashed,onSkip,onSettings,onShelf}){
   const skipped=(state.skipped||[]).includes(today);
   const type=skipped?"recovery":getDayType(today,state.anchor,state.colorDates);
   const focus=getFocus(today,state.anchor);
-  const steps=buildSteps(type,focus,state.sel);
+  const steps=buildSteps(type,focus,state.sel,state.dayModes?.[today]||null);
   const done=(state.progress[today]||[]).filter(id=>steps.some(s=>s.id===id)).length;
   const precolor=type!=="color"&&isPreColor(today,state.anchor,state.colorDates);
   const th=T[type];
@@ -953,14 +961,28 @@ function Routine({state,dispatch,dateKey,onBack,onNavDay}){
   const focus=getFocus(dateKey,state.anchor);
   const finishMode=state.dayModes?.[dateKey]||null;
   const[showModePicker,setShowModePicker]=useState(type==="wash"&&!finishMode);
-  const steps=buildSteps(type,focus,state.sel,finishMode||"natural");
+  const steps=buildSteps(type,focus,state.sel,finishMode);
   const doneIds=state.progress[dateKey]||[];
   const done=doneIds.filter(id=>steps.some(s=>s.id===id)).length;
   const isToday=dateKey===todayKey();
   const precolor=type!=="color"&&isPreColor(dateKey,state.anchor,state.colorDates);
   const th=T[type]||T.wash;
-  const onTS=e=>touchX.current=e.touches[0].clientX;
-  const onTE=e=>{if(touchX.current===null)return;const dx=e.changedTouches[0].clientX-touchX.current;if(Math.abs(dx)>55)onNavDay(dx<0?1:-1);touchX.current=null};
+  const onTS=e=>{
+    touchX.current={x:e.touches[0].clientX,y:e.touches[0].clientY,t:Date.now()};
+  };
+  const onTE=e=>{
+    const start=touchX.current;
+    touchX.current=null;
+    if(!start)return;
+    const dx=e.changedTouches[0].clientX-start.x;
+    const dy=e.changedTouches[0].clientY-start.y;
+    const dt=Date.now()-start.t;
+    // exige: distância horizontal significativa, movimento predominantemente
+    // horizontal (2x maior que o vertical) e gesto rápido (não um scroll lento)
+    if(Math.abs(dx)>70 && Math.abs(dx)>Math.abs(dy)*2 && dt<600){
+      onNavDay(dx<0?1:-1);
+    }
+  };
   const getProd=slot=>getEffectiveProduct(state,slot,dateKey);
   const group=ph=>steps.filter(s=>s.phase===ph);
 
