@@ -106,46 +106,96 @@ function buildSteps(type,focus,sel={}){
 
 /* ── DEFAULT PRODUCTS (prateleira pré-carregada) ── */
 const DEFAULT_PRODUCTS=[
+  // SHAMPOO
   {id:"p01",name:"Gloss Absolu Hydra Glaze",brand:"Kérastase",category:"Shampoo",
-   benefits:"pH controlado, ação quelante leve, suave na cor e na cutícula. Melhor escolha pra lavagem regular com porosidade alta.",
-   notes:"Usar em toda lavagem. Massagear só no couro cabeludo.",addedAt:"2025-01-01"},
+   benefits:"pH controlado, ação quelante leve, suave na cor e na cutícula. Melhor opção para lavagem regular com porosidade alta.",
+   notes:"Usar em toda lavagem. Massagear só no couro cabeludo.",verdict:"adequado"},
   {id:"p02",name:"NutriOil Professionnel",brand:"L'Oréal",category:"Shampoo",
-   benefits:"Formulado para cabelos secos e fracos. Surfactantes mais pesados tendem a acumular em porosidade alta.",
-   notes:"Usar esporadicamente — não como shampoo fixo da rotina.",addedAt:"2025-01-01"},
-  {id:"p03",name:"Résistance Thérapiste",brand:"Kérastase",category:"Máscara",
-   benefits:"Feita para porosidade alta e química de coloração. Reconstrói ligações internas com proteínas hidrolisadas.",
-   notes:"Semanas de reconstrução. Não usar toda semana — risco de excesso proteico.",addedAt:"2025-01-01"},
-  {id:"p04",name:"Expert NutriOil",brand:"L'Oréal",category:"Máscara",
-   benefits:"Nutritiva mas pesada para porosidade alta. Acumula mais rápido do que trata.",
-   notes:"Reservar para semanas de hidratação no máximo.",addedAt:"2025-01-01"},
-  {id:"p05",name:"Gloss Absolu Insta Glaze",brand:"Kérastase",category:"Condicionador",
-   benefits:"Leve, catiônico, fecha cutícula sem pesar. pH compatível com o shampoo da mesma linha.",
-   notes:"Dias que não precisam de máscara completa.",addedAt:"2025-01-01"},
-  {id:"p06",name:"NutriOil Condicionador",brand:"L'Oréal",category:"Condicionador",
-   benefits:"Concentração de lipídios pesados acumula em fio poroso.",
-   notes:"Aplicar só nas pontas e enxaguar bem.",addedAt:"2025-01-01"},
-  {id:"p07",name:"Résistance Thérapiste Sérum (leave-in)",brand:"Kérastase",category:"Leave-in",
-   benefits:"Sérum leve com proteção térmica e reparação. Ideal para quem colore mensalmente.",
-   notes:"Aplicar nos comprimentos e pontas após toalha.",addedAt:"2025-01-01"},
-  {id:"p08",name:"Gloss Absolu Glaze Drops",brand:"Kérastase",category:"Óleo",
-   benefits:"Óleo leve com silicone volátil de baixo peso molecular — evapora sem acumular. Brilho sem peso.",
-   notes:"Uso diário nas pontas. Compatível com coloração.",addedAt:"2025-01-01"},
-  {id:"p09",name:"More Inside Oil Non Oil",brand:"Davines",category:"Óleo",
-   benefits:"Textura gel-óleo leve, sem silicone pesado. Boa opção em dias de manutenção.",
-   notes:"Dias de manutenção quando o fio está seco sem querer lavar.",addedAt:"2025-01-01"},
-  {id:"p10",name:"Oi Oil",brand:"Davines",category:"Óleo",
-   benefits:"Formulado para texturas grossas. Pode pesar em porosidade alta se usado no comprimento todo.",
-   notes:"Restringir às pontas, máximo 2× por semana.",addedAt:"2025-01-01"},
-  {id:"p11",name:"Óleo Reparador 3 em 1 Vita Glow",brand:"Ox Mari Maria",category:"Óleo",
-   benefits:"Base Cyclopentasiloxane + Dimethiconol — silicone pesado que acumula na cutícula aberta e bloqueia absorção dos tratamentos.",
-   notes:"Evitar. Não compatível com porosidade alta + coloração mensal.",addedAt:"2025-01-01"},
-  {id:"p12",name:"Nutritive Night Repair",brand:"Kérastase",category:"Sérum",
+   benefits:"Formulado para cabelos secos e fracos com porosidade baixa. Surfactantes mais pesados tendem a acumular em porosidade alta.",
+   notes:"Usar esporadicamente — não como shampoo fixo.",verdict:"ressalva"},
+  {id:"p03",name:"Cetoconazol 20mg/g",brand:"Cimed",category:"Shampoo",
+   benefits:"Shampoo medicinal antifúngico para dermatite seborreica e caspa. Não é produto de rotina capilar.",
+   notes:"Usar conforme orientação médica. Não substitui o shampoo de tratamento.",verdict:"neutro"},
+  // MASCARA
+  {id:"p04",name:"Résistance Thérapiste Máscara",brand:"Kérastase",category:"Máscara",
+   benefits:"Feita para porosidade alta e coloração. Reconstrói ligações internas com proteínas hidrolisadas.",
+   notes:"Semanas de reconstrução. Alternar com hidratação para evitar excesso proteico.",verdict:"adequado"},
+  {id:"p05",name:"Expert NutriOil Máscara",brand:"L'Oréal",category:"Máscara",
+   benefits:"Nutritiva mas com lipídios pesados que acumulam em porosidade alta com uso frequente.",
+   notes:"Reservar para semanas de hidratação pontualmente.",verdict:"ressalva"},
+  {id:"p06",name:"Moisture Recovery Balm",brand:"Joico",category:"Máscara",
+   benefits:"Umectação profunda com algas marinhas, jojoba e aminoácidos. Smart Release libera arginina, queratina e óleo de rosa mosqueta continuamente. Boa máscara de hidratação.",
+   notes:"Semanas de hidratação. 3–5 min. Não usar na mesma semana da Thérapiste.",verdict:"adequado"},
+  {id:"p07",name:"Chroma Absolu Soin Acide Chroma Gloss",brand:"Kérastase",category:"Máscara",
+   benefits:"Acidificante em formato de máscara. Sela cutícula, potencializa brilho e prolonga a cor. pH ácido ideal pós-coloração.",
+   notes:"Usar na semana pós-coloração em substituição à máscara de hidratação.",verdict:"adequado"},
+  // CONDICIONADOR
+  {id:"p08",name:"Gloss Absolu Insta Glaze",brand:"Kérastase",category:"Condicionador",
+   benefits:"Leve, catiônico, fecha cutícula sem pesar. Alternativa à máscara em dias de lavagem rápida.",
+   notes:"Dias que não precisam de tratamento completo.",verdict:"adequado"},
+  {id:"p09",name:"NutriOil Condicionador",brand:"L'Oréal",category:"Condicionador",
+   benefits:"Lipídios pesados acumulam em porosidade alta com uso frequente.",
+   notes:"Aplicar só nas pontas e enxaguar bem.",verdict:"ressalva"},
+  // LEAVE-IN
+  {id:"p10",name:"Résistance Thérapiste Sérum",brand:"Kérastase",category:"Leave-in",
+   benefits:"Leave-in leve com proteção térmica e reparação de pontas. Ideal para quem colore mensalmente.",
+   notes:"Aplicar nos comprimentos e pontas após toalha.",verdict:"adequado"},
+  {id:"p11",name:"K18 Leave-In Molecular Repair",brand:"K18",category:"Leave-in",
+   benefits:"K18Peptide repara ligações polipeptídicas quebradas pela coloração e calor. Não aplicar condicionador antes — bloqueia penetração. Clinicamente comprovado.",
+   notes:"Após shampoo, sem condicionador. 4 min, não enxaguar. Usar por 4–6 lavagens seguidas para resultado progressivo.",verdict:"adequado"},
+  {id:"p12",name:"Absolut Repair Molecular Leave-In Mask",brand:"L'Oréal Professionnel",category:"Leave-in",
+   benefits:"Leave-in de reparação molecular com glutationa e glicoamina. Fortalece ligações capilares danificadas por química.",
+   notes:"Aplicar nos fios úmidos após shampoo. Não enxaguar.",verdict:"adequado"},
+  // OLEO
+  {id:"p13",name:"Gloss Absolu Glaze Drops",brand:"Kérastase",category:"Óleo",
+   benefits:"Óleo leve com silicone volátil de baixo peso molecular. Evapora sem acumular. Brilho sem peso.",
+   notes:"Uso diário nas pontas. Compatível com coloração.",verdict:"adequado"},
+  {id:"p14",name:"More Inside Oil Non Oil",brand:"Davines",category:"Óleo",
+   benefits:"Gel-óleo leve sem silicone pesado. Formulação limpa, compatível com coloração.",
+   notes:"Dias de manutenção quando o fio está seco.",verdict:"adequado"},
+  {id:"p15",name:"Oi Oil",brand:"Davines",category:"Óleo",
+   benefits:"Formulado para texturas grossas. Mais denso — pode pesar em porosidade alta no comprimento todo.",
+   notes:"Restringir às pontas. Máximo 2× por semana.",verdict:"ressalva"},
+  {id:"p16",name:"Óleo Capilar Pinga Patauá e Moringa",brand:"Lola Cosmetics",category:"Óleo",
+   benefits:"Patauá tem alto teor de ácido oleico, similar ao azeite. Moringa é rico em ácidos graxos que selam cutícula. Leve e de fácil absorção.",
+   notes:"Pontas em dias de manutenção ou pós-banho.",verdict:"adequado"},
+  {id:"p17",name:"N7 Bonding Oil",brand:"Olaplex",category:"Óleo",
+   benefits:"Contém Bis-Aminopropyl Diglycol Dimaleate (bond builder Olaplex) + óleos de girassol, moringa e romã. Silicone de qualidade (Dimethicone + Isohexadecane) leve. Proteção térmica até 232°C. Reduz quebra em 77%.",
+   notes:"2–3 gotas nos fios úmidos ou secos. Uso diário possível. Excelente protetor térmico.",verdict:"adequado"},
+  {id:"p18",name:"Óleo Reparador 3 em 1 Vita Glow",brand:"Ox Mari Maria",category:"Óleo",
+   benefits:"Base Cyclopentasiloxane + Dimethiconol — silicone pesado de difícil remoção que acumula na cutícula aberta e bloqueia absorção dos tratamentos ao longo das semanas.",
+   notes:"Evitar. Não compatível com porosidade alta e coloração mensal.",verdict:"nao"},
+  // SERUM
+  {id:"p19",name:"Acidic Bonding Concentrate Night & Day",brand:"Redken",category:"Sérum",
+   benefits:"Melhor sérum noturno para este perfil. Ácido cítrico estabiliza pH pós-coloração. Bond builders reconstroem ligações quebradas pela química.",
+   notes:"Uso diário nos fios secos antes de dormir. Não enxaguar.",verdict:"adequado"},
+  {id:"p20",name:"Nutritive Night Repair",brand:"Kérastase",category:"Sérum",
    benefits:"Sérum noturno para cabelos secos. Válido especialmente na semana pós-coloração.",
-   notes:"Aplicar nos fios secos antes de dormir.",addedAt:"2025-01-01"},
-  {id:"p13",name:"Acidic Bonding Concentrate Night & Day",brand:"Redken",category:"Sérum",
-   benefits:"Melhor sérum noturno para este perfil. Ácido cítrico estabiliza o pH pós-coloração, bond builders reconstroem ligações quebradas pela química.",
-   notes:"Uso diário nos fios secos antes de dormir. Não enxaguar.",addedAt:"2025-01-01"},
+   notes:"Fios secos antes de dormir. Não enxaguar.",verdict:"adequado"},
+  {id:"p21",name:"Absolut Repair Molecular Sérum",brand:"L'Oréal Professionnel",category:"Sérum",
+   benefits:"Sérum de reparação molecular com glutationa. Protege ligações durante e após processo químico.",
+   notes:"Aplicar nos fios úmidos ou secos como finalizador.",verdict:"adequado"},
+  // OUTRO
+  {id:"p22",name:"Dream Coat Supernatural Spray",brand:"Color Wow",category:"Outro",
+   benefits:"Polímero hidroativado por calor (Polysilicone-29 + Silicone Quaternium-18) que sela a cutícula e repele umidade. Especialmente formulado para cabelo colorido e poroso. Efeito dura 3–4 lavagens.",
+   notes:"Aplicar em fios úmidos (não molhados) e secar com escova — o calor ativa o polímero. Não aplicar outros produtos antes de secar.",verdict:"adequado"},
+  {id:"p23",name:"Night Spa",brand:"Truss",category:"Outro",
+   benefits:"Leave-in noturno com óleo de abissínia e proteínas. Nutre e repara durante a noite sem enxaguar.",
+   notes:"Fios secos ou levemente úmidos antes de dormir.",verdict:"adequado"},
+  {id:"p24",name:"Uso Obrigatório Hair Reconstructor",brand:"Truss",category:"Outro",
+   benefits:"Leave-in de reconstrução com proteínas e amino acids. Proteção térmica.",
+   notes:"Fios úmidos pós-banho antes de finalizar.",verdict:"adequado"},
 ];
+
+const DEFAULT_SEL={
+  shampoo:"p01",
+  mascara:"p04",
+  leavein:"p10",
+  oleo:"p13",
+  oleo_pesado:"p14",
+  protetor:"p10",
+};
+
 
 /* default sel: pré-seleciona os melhores produtos por slot */
 const DEFAULT_SEL={
@@ -579,7 +629,11 @@ function Home({state,onRoutine,onWashed,onSkip,onSettings,onShelf}){
             <span style={{fontSize:11,letterSpacing:".24em",textTransform:"uppercase",color:"rgba(240,237,230,.5)",fontWeight:500}}>Ritual</span>
             <div style={{display:"flex",alignItems:"center",gap:8}}>
               <button onClick={onShelf} style={{padding:"7px 14px",borderRadius:40,background:"rgba(240,237,230,.1)",border:"1px solid rgba(240,237,230,.2)",cursor:"pointer",color:"rgba(240,237,230,.8)",fontSize:12}}>prateleira</button>
-              <button onClick={onSettings} style={{width:32,height:32,borderRadius:"50%",background:"rgba(240,237,230,.1)",border:"1px solid rgba(240,237,230,.2)",cursor:"pointer",color:"rgba(240,237,230,.8)",fontSize:15,display:"flex",alignItems:"center",justifyContent:"center"}}>⚙</button>
+              <button onClick={onSettings} style={{width:32,height:32,borderRadius:"50%",background:"rgba(240,237,230,.1)",border:"1px solid rgba(240,237,230,.2)",cursor:"pointer",color:"rgba(240,237,230,.8)",fontSize:15,display:"flex",alignItems:"center",justifyContent:"center"}}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" stroke="rgba(240,237,230,.8)" strokeWidth="1.2" fill="none"/>
+                <path d="M13.3 7a5.7 5.7 0 0 0-.1-.7l1.3-1-.9-1.6-1.5.5a5.5 5.5 0 0 0-1.2-.7L10.7 2H9.3l-.2 1.5a5.5 5.5 0 0 0-1.2.7L6.4 3.7 5.5 5.3l1.3 1a5.7 5.7 0 0 0-.1 1.4v-.7l-1.3 1 .9 1.6 1.5-.5c.4.3.8.5 1.2.7l.2 1.5h1.4l.2-1.5c.4-.2.8-.4 1.2-.7l1.5.5.9-1.6-1.3-1a5.7 5.7 0 0 0 .1-.7z" stroke="rgba(240,237,230,.8)" strokeWidth="1.1" fill="none"/>
+              </svg></button>
               <Ring value={done} total={steps.length}/>
             </div>
           </div>
@@ -736,7 +790,7 @@ function App(){
   const[routineDate,setRoutineDate]=useState(todayKey());
   const[shelf,setShelf]=useState(false);
 
-  useEffect(()=>{const s=load();setState(s);setScreen(s.profile?"home":"quiz")},[]);
+  useEffect(()=>{const s=load();setState(s);setScreen("home")},[]);
   useEffect(()=>{if(screen!=="loading")save(state)},[state,screen]);
 
   const dispatch=useCallback(a=>{
